@@ -1,0 +1,10 @@
+Quizduino
+#g1q to answer questions
+
+each question has a time limit of 20 questions, 4 options are provided
+
+sample response: #g1q a 
+b #g1q - answer b
+#g1q my score - display score for current game and lifetime score
+ - tweets cannot be duplicated: answers MUST be different to the prior one!
+
