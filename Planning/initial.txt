@@ -8,3 +8,7 @@ b #g1q - answer b
 #g1q my score - display score for current game and lifetime score
  - tweets cannot be duplicated: answers MUST be different to the prior one!
 
+	Access Token	3084147658-CXecwGKgNf6ReCxjQw0KHCYNQVEceoEFf5sNfhN
+Access Token Secret	A5Odm9azVa9MurworwwPYMN3VjlcXtiypMD9SIpgQLv0P
+Consumer Key (API Key)	BkXp9P3M8KqpmQBpwtH4xaStG
+Consumer Secret (API Secret)	3E5LMKw2ADPNPxqQMzd1JqtCoKJ6rNOVY91IEQetlJmwdiP4QB
