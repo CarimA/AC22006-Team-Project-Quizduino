@@ -1,5 +1,5 @@
 Quizduino
-#g1q to answer questions
+#g1q to answer question
 
 each question has a time limit of 20 questions, 4 options are provided
 
@@ -12,3 +12,5 @@ b #g1q - answer b
 Access Token Secret	A5Odm9azVa9MurworwwPYMN3VjlcXtiypMD9SIpgQLv0P
 Consumer Key (API Key)	BkXp9P3M8KqpmQBpwtH4xaStG
 Consumer Secret (API Secret)	3E5LMKw2ADPNPxqQMzd1JqtCoKJ6rNOVY91IEQetlJmwdiP4QB
+
+test
