@@ -1,8 +1,15 @@
+PFont Neoteric, Roboto;
+
 void setup()
 {
   //size(500, 500);
   size(1920, 1080);
   background(255);  
+  
+  
+  Neoteric = createFont("NEOTERIC-Regular.ttf", 25);
+  Roboto = createFont("Roboto-Regular.ttf", 25);
+  
 
 
 }
@@ -27,12 +34,12 @@ void draw()
   int xSide=250; //size of rectangle sides
   int ySide=80;
 
-  textSize(25);
-  
+  textFont(Roboto, 25);
   fill(204, 102, 0);
   text(questions[i], xPos, yPos-250);
   
   
+  textFont(Neoteric, 25);
   fill(255);
   rect(xPos, yPos, xSide, ySide);
   fill(204, 102, 0);
