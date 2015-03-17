@@ -22,12 +22,17 @@ final int STATE_FINISHED = 3;
 final int STATE_POINTS = 4;
 final int STATE_DATA = 5;
 
+int randomCode;
+
 void setup() {
   size(1920, 1080);
   
   ard = new Arduino(this, Arduino.list()[2], 57600);
   ard.pinMode(servoPin, 4);
   ard.pinMode(buzzerPin, Arduino.OUTPUT);
+  
+  Random r = new Random();
+  randomCode = r.nextInt(8999) + 1000;
   
   ConfigurationBuilder cb = new ConfigurationBuilder();
   cb.setOAuthConsumerKey("BkXp9P3M8KqpmQBpwtH4xaStG");
@@ -36,20 +41,6 @@ void setup() {
   cb.setOAuthAccessTokenSecret("A5Odm9azVa9MurworwwPYMN3VjlcXtiypMD9SIpgQLv0P");
   twitter = new TwitterFactory(cb.build()).getInstance();
   
-  Query query = new Query("test");
-  try
-  {
-    QueryResult result = twitter.search(query);
-    for (Status status : result.getTweets())
-    {
-      println("@" + status.getUser().getScreenName() + ":" + status.getText() + " [created at " + status.getCreatedAt() + "]");
-    }  
-  }
-  catch (TwitterException e)
-  {
-    
-  }
-
   images = new HashMap<String, PImage>();
   images.put("background", loadImage("bg.png"));
   images.put("logo", loadImage("logo.png"));
@@ -118,19 +109,56 @@ void drawStateAmount()
 {
   tempTextY = lerp(tempTextY, 1080 / 2, amountY.position());
   drawText("neoteric_large", "HOW MANY QUESTIONS DO\r\nYOU WANT TO PLAY?", 120, 1920 / 2, tempTextY - 150, CENTER, CENTER);
-  drawText("roboto_thin_normal", "Respond with #g1q <number of questions>", 60, 1920 / 2, tempTextY + 150, CENTER, CENTER);
+  drawText("roboto_thin_normal", "Respond with #g1q_" + randomCode + " <number of questions>", 60, 1920 / 2, tempTextY + 150, CENTER, CENTER);
 
-  drawText("roboto_thin_small", "You have 20 seconds to enter how many questons you\r\nwant to play. The responses will be averaged to generate a quiz!", 30, 1920 / 2, tempTextY + 250, CENTER, CENTER);
+  drawText("roboto_thin_small", "You have 30 seconds to enter how many questons you\r\nwant to play. The responses will be averaged to generate a quiz!", 30, 1920 / 2, tempTextY + 250, CENTER, CENTER);
 
   if (tempTextY >= 1080 / 2)
   {
     logoY = null;
     amountY = null;
     
-    tickServo(22000);
+    tickServo(30000);
     
+    delay(20000);
     // time to get the Twitter responses! 
-    
+  Query query = new Query("#g1q_" + randomCode);
+  query.setCount(50);
+  int total = 0; int count = 0;
+  try
+  {
+    QueryResult result = twitter.search(query);
+    for (Status status : result.getTweets())
+    {
+      try 
+      {
+        String temp = status.getText();
+        temp = temp.toLowerCase();
+        temp = temp.replace("#g1q_" + randomCode, "");
+        temp = temp.replace("@quizduino", "");
+        temp = temp.trim();
+        total += Integer.parseInt(temp);
+        count++;
+      }
+      catch (Exception ex)
+      {
+        //println("error" + ex);
+      }
+      //println("@" + status.getUser().getScreenName() + ":" + status.getText() + " [created at " + status.getCreatedAt() + "]");
+    }  
+  }
+  catch (TwitterException tex)
+  {
+    //println("twitter error" + tex);
+  }
+  
+  if (total == 0) total = 20;
+  if (count == 0) count = 1;
+  
+  int questionNo = total / count; 
+
+println(questionNo);
+delay(500000);
   }
 }
 
