@@ -1,7 +1,15 @@
 import java.util.Map;
 import megamu.shapetween.*;
 import java.util.*;
+import processing.serial.*;
+import cc.arduino.*;
 
+Arduino ard;
+int servoPin = 8;
+int buzzerPin = 13;
+
+Twitter twitter;
+    
 HashMap<String, PImage> images;
 HashMap<String, PFont> fonts;
 int state;
@@ -16,6 +24,31 @@ final int STATE_DATA = 5;
 
 void setup() {
   size(1920, 1080);
+  
+  ard = new Arduino(this, Arduino.list()[2], 57600);
+  ard.pinMode(servoPin, 4);
+  ard.pinMode(buzzerPin, Arduino.OUTPUT);
+  
+  ConfigurationBuilder cb = new ConfigurationBuilder();
+  cb.setOAuthConsumerKey("BkXp9P3M8KqpmQBpwtH4xaStG");
+  cb.setOAuthConsumerSecret("3E5LMKw2ADPNPxqQMzd1JqtCoKJ6rNOVY91IEQetlJmwdiP4QB");
+  cb.setOAuthAccessToken("3084147658-CXecwGKgNf6ReCxjQw0KHCYNQVEceoEFf5sNfhN");
+  cb.setOAuthAccessTokenSecret("A5Odm9azVa9MurworwwPYMN3VjlcXtiypMD9SIpgQLv0P");
+  twitter = new TwitterFactory(cb.build()).getInstance();
+  
+  Query query = new Query("test");
+  try
+  {
+    QueryResult result = twitter.search(query);
+    for (Status status : result.getTweets())
+    {
+      println("@" + status.getUser().getScreenName() + ":" + status.getText() + " [created at " + status.getCreatedAt() + "]");
+    }  
+  }
+  catch (TwitterException e)
+  {
+    
+  }
 
   images = new HashMap<String, PImage>();
   images.put("background", loadImage("bg.png"));
@@ -85,9 +118,20 @@ void drawStateAmount()
 {
   tempTextY = lerp(tempTextY, 1080 / 2, amountY.position());
   drawText("neoteric_large", "HOW MANY QUESTIONS DO\r\nYOU WANT TO PLAY?", 120, 1920 / 2, tempTextY - 150, CENTER, CENTER);
-  drawText("roboto_thin_normal", "Respond with #g1q", 60, 1920 / 2, tempTextY + 150, CENTER, CENTER);
+  drawText("roboto_thin_normal", "Respond with #g1q <number of questions>", 60, 1920 / 2, tempTextY + 150, CENTER, CENTER);
 
   drawText("roboto_thin_small", "You have 20 seconds to enter how many questons you\r\nwant to play. The responses will be averaged to generate a quiz!", 30, 1920 / 2, tempTextY + 250, CENTER, CENTER);
+
+  if (tempTextY >= 1080 / 2)
+  {
+    logoY = null;
+    amountY = null;
+    
+    tickServo(22000);
+    
+    // time to get the Twitter responses! 
+    
+  }
 }
 
 // #### HELPER METHODS
@@ -103,6 +147,22 @@ void drawText(String font, String text, int size, float x, float y, int alignX, 
   text(text, x, y);
 }
 
+void tickServo(int time)
+{
+  int delayTime = time / 180;
+  for (int i = 0; i < 180; i++)
+  {
+    ard.servoWrite(servoPin, i);
+    delay(delayTime);
+  }
+}
+
+void delay(int delay)
+{
+  int time = millis();
+  while(millis() - time <= delay);
+}
+
 class QuestionManager
 {
   ArrayList<Question> questions;
@@ -110,8 +170,8 @@ class QuestionManager
 
   public void load()
   {
-    JSONObject json = loadJSONObject("questions.json");
-    println(json);
+    //JSONObject json = loadJSONObject("questions.json");
+    //println(json);
     
   }
 
