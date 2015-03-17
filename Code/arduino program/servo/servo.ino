@@ -17,7 +17,7 @@ void loop()
   for(int i=0; i < 180; i++)   
   { 
     myservo.write(i);                // tell servo to move to new position 
-    delay(111);                      // wait (20 seconds/180?)
+    delay(118);                      // wait (20 seconds/180?)
   }
   
 }
