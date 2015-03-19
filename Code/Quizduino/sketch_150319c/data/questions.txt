@@ -1,0 +1,197 @@
+﻿{[
+{
+    "question": "Who won the UEFA European Championship of 2000?",
+    "correctAnswer": "France",
+    "wrongAnswers": "Italy\r\nPortugal\r\nSpain"
+  },
+  {
+    "question": "What word means “zero” when calling the score in tennis?",
+    "correctAnswer": "Love",
+    "wrongAnswers": "Dove\r\nNothing\r\nHug"
+  },
+  {
+    "question": "What sport doesn’t have a goalie position?",
+    "correctAnswer": "Basketball",
+    "wrongAnswers": "Ice Hockey\r\nSoccer\r\nLacrosse"
+  },
+  {
+    "question": "What is the center of an atom called?",
+    "correctAnswer": "Nucleus",
+    "wrongAnswers": "DNA\r\nMolecule\r\nCell"
+  },
+  {
+    "question": "What is the unit of measure for sound?",
+    "correctAnswer": "Decibels",
+    "wrongAnswers": "Photons\r\nAudibles\r\nElectrons"
+  },
+  {
+    "question": "Which element is Ra in the periodic table?",
+    "correctAnswer": "Radium",
+    "wrongAnswers": "Rubidium\r\nRadio\r\nRhodium"
+  },
+  {
+    "question": "What is the charge of a proton?",
+    "correctAnswer": "+1",
+    "wrongAnswers": "-1\r\n0\r\n+2"
+  },
+  {
+    "question": "Where is the Nile river?",
+    "correctAnswer": "Africa",
+    "wrongAnswers": "America\r\nEurope\r\nAsia"
+  },
+  {
+    "question": "Which city is not in Germany?",
+    "correctAnswer": "Bern",
+    "wrongAnswers": "Duesseldorf\r\nMunich\r\nFreiburg"
+  },
+  {
+    "question": "Who is on the hundred dollar bill?",
+    "correctAnswer": "Benjamin Franklin",
+    "wrongAnswers": "Thomas Jefferson\r\nGeorge Washington\r\nRobert E Lee"
+  },
+  {
+    "question": "What inspired Walt Disney to make Disney?",
+    "correctAnswer": "A Mouse",
+    "wrongAnswers": "A Bird\r\nA Dog\r\nA Rat"
+  },
+  {
+    "question": "What culture thought of cats as gods?",
+    "correctAnswer": "Egyptians",
+    "wrongAnswers": "Germans\r\nSaudi Arabians\r\nFrench"
+  },
+  {
+    "question": "Who fought Medusa?",
+    "correctAnswer": "Perseus",
+    "wrongAnswers": "Theseus\r\nAchilles\r\nHercules"
+  },
+  {
+    "question": "What is the largest art museum in the world?",
+    "correctAnswer": "The Louvre",
+    "wrongAnswers": "New York Museum Of Art\r\nMusee D’orsay\r\nThe National Gallery"
+  },
+  {
+    "question": "Which of these is a Brazilian Painter?",
+    "correctAnswer": "Romero Britto",
+    "wrongAnswers": "Picasso\r\nMichaelangelo\r\nLeonardo Da Vinci"
+  },
+  {
+    "question": "What is one of the noble gases?",
+    "correctAnswer": "Helium (He)",
+    "wrongAnswers": "Chlorine (Cl)\r\nLithium (Li)\r\nCarbon (C)"
+  },
+  {
+    "question": "With what is training Lara Croft in the opening scene of ‘Tomb Raider’?",
+    "correctAnswer": "With a robot",
+    "wrongAnswers": "With 3D glasses\r\nWith a tiger\r\nWith a martial arts master"
+  },
+  {
+    "question": "With what colour flame does sodium burn when heated in the flame of a Bunsen burner?",
+    "correctAnswer": "Yellow",
+    "wrongAnswers": "Violet\r\nRed\r\nRed"
+  },
+  {
+    "question": "Which island is in Africa?",
+    "correctAnswer": "Madagascar",
+    "wrongAnswers": "Tortuga\r\nIsle of Man\r\nCyprus"
+  },
+  {
+    "question": "Why do crocodiles leave their mouth open for a long time?",
+    "correctAnswer": "To stay warm",
+    "wrongAnswers": "To drink water\r\nTo digest food\r\nTo wait for an animal to drop in"
+  },
+  {
+    "question": "Why is The Dead Sea called that way?",
+    "correctAnswer": "Because nothing can live in it",
+    "wrongAnswers": "It rhymes with The Red Sea\r\nBodies are buried at the bottom\r\nBecause of a historical war"
+  },
+  {
+    "question": "Whose quote is “Fly like a butterfly sting like a bee”?",
+    "correctAnswer": "Muhammad Ali",
+    "wrongAnswers": "Usain Bolt\r\nTyson Gay\r\nAdolf Hitler"
+  },
+  {
+    "question": "Who’s the writer of ‘Game of Thrones’?",
+    "correctAnswer": "George R.R. Martin",
+    "wrongAnswers": "J.K. Rowling\r\nCamila Lackberg\r\nKen Follett"
+  },
+  {
+    "question": "Who’s the father of modern electromagnetism?",
+    "correctAnswer": "Maxwell",
+    "wrongAnswers": "Faraday\r\nHelmoltz\r\nVolta"
+  },
+  {
+    "question": "Who’s the author of ‘The Picture of Dorian Gray’?",
+    "correctAnswer": "Oscar Wilde",
+    "wrongAnswers": "Arthur Conan Doyle\r\nGeorge Orwell\r\nCharles Dickens"
+  },
+  {
+    "question": "Who’s the author of ‘Moby Dick’?",
+    "correctAnswer": "Herman Melville",
+    "wrongAnswers": "Ralph Waldo Emerson\r\nHenry James\r\nHenry David Thoreau"
+  },
+  {
+    "question": "Who’s the artist of the famous painting ‘The Sunflowers’?",
+    "correctAnswer": "Van Gogh",
+    "wrongAnswers": "Monet\r\nRembrandt\r\nGoya"
+  },
+  {
+    "question": "The Half Life symbol is what Greek letter?",
+    "correctAnswer": "Lambda",
+    "wrongAnswers": "Omicron\r\nSigma\r\nOmega"
+  },
+  {
+    "question": "Which of these is not one of Rockstar Games' hits, but is actually a puzzle-platformer developed by Valve?",
+    "correctAnswer": "Portal",
+    "wrongAnswers": "L.A. Noire\r\nRed Dead Redemption\r\nGrand Theft Auto V"
+  },
+  {
+    "question": "What fruit is most commonly used to make wine?",
+    "correctAnswer": "Grape",
+    "wrongAnswers": "Strawberries\r\nApples\r\nPears"
+  },
+  {
+    "question": "How many wings does a bee have?",
+    "correctAnswer": "4",
+    "wrongAnswers": "2\r\n6\r\n8"
+  },
+  {
+    "question": "What is irregular about the Manx cat?",
+    "correctAnswer": "No tail",
+    "wrongAnswers": "No fur\r\nNo pointy ears\r\nClear irises"
+  },
+  {
+    "question": "The siege of which city is described in Homer's Iliad?",
+    "correctAnswer": "Troy",
+    "wrongAnswers": "Crete\r\nAthens\r\nIthaca"
+  },
+  {
+    "question": "How long does it take light from the Sun to reach the Earth?",
+    "correctAnswer": "8 minutes 20 seconds",
+    "wrongAnswers": "5 minues 40 seconds\r\n2 minutes 20 seconds\r\n10 minutes 10 seconds"
+  },
+  {
+    "question": "What Country was first to be able to buy the CD?",
+    "correctAnswer": "Japan",
+    "wrongAnswers": "China\r\nUSA\r\nGermany"
+  },
+  {
+    "question": "In 'Peter Pan' how did Captain Hook lose his hand?",
+    "correctAnswer": "Bitten off by a crocodile",
+    "wrongAnswers": "Cut off because of disease\r\nSmashed by a rock\r\nHe ate is himself"
+  },
+  {
+    "question": "How many squares make up a standard 'Snakes & Ladders' board?",
+    "correctAnswer": "100",
+    "wrongAnswers": "50\r\n80\r\n60"
+  },
+  {
+    "question": "Ailurophobia is a fear of what?",
+    "correctAnswer": "Cats",
+    "wrongAnswers": "Dogs\r\nHorses\r\nBirds"
+  },
+  {
+    "question": "Pediophobia is a fear of what?",
+    "correctAnswer": "Dolls",
+    "wrongAnswers": "Kids\r\nThe Pope\r\nReptiles"
+  }
+]}
