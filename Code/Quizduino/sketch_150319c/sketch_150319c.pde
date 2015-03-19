@@ -6,7 +6,9 @@ import cc.arduino.*;
 
 // state management
 public Stack<State> stateStack;
+boolean previousLoading;
 boolean displayLoading;
+boolean collecting;
 
 // serial management
 Arduino ard;
@@ -15,10 +17,14 @@ int buzzerPin = 13;
 
 // twitter management
 Twitter twitter;
+HashMap<String, String> recentTweets;
 
 // asset management
 HashMap<String, PImage> images;
 HashMap<String, PFont> fonts;
+
+// question management
+QuestionManager questions;
 
 // misc.
 Random random = new Random();
@@ -27,18 +33,19 @@ String randomCode;
 void setup()
 {
   size(1920, 1080);
-  
+
   ard = new Arduino(this, Arduino.list()[2], 57600);
   ard.pinMode(servoPin, 4);
   ard.pinMode(buzzerPin, Arduino.OUTPUT);
-  
+
   ConfigurationBuilder cb = new ConfigurationBuilder();
   cb.setOAuthConsumerKey("BkXp9P3M8KqpmQBpwtH4xaStG");
   cb.setOAuthConsumerSecret("3E5LMKw2ADPNPxqQMzd1JqtCoKJ6rNOVY91IEQetlJmwdiP4QB");
   cb.setOAuthAccessToken("3084147658-CXecwGKgNf6ReCxjQw0KHCYNQVEceoEFf5sNfhN");
   cb.setOAuthAccessTokenSecret("A5Odm9azVa9MurworwwPYMN3VjlcXtiypMD9SIpgQLv0P");
   twitter = new TwitterFactory(cb.build()).getInstance();
-  
+  recentTweets = new HashMap<String, String>();
+
   images = new HashMap<String, PImage>();
   images.put("background", loadImage("bg.png"));
   images.put("logo", loadImage("logo.png"));
@@ -49,9 +56,14 @@ void setup()
   fonts.put("lobster", createFont("lobster.otf", 60));
 
   stateStack = new Stack<State>();
+  previousLoading = false;
   displayLoading = false;
+  collecting = false;
   pushStack(new stateSplash());
   
+  questions = new QuestionManager();
+  questions.loadQuestions();
+
   frameRate(120);
 }
 
@@ -59,18 +71,30 @@ void draw()
 {
   background(102);
   drawImage("background", 0, 0);
-  
+
   if (!stateStack.empty())
+  {
+    if (collecting)
+    {
+      recentTweets = new HashMap<String, String>();
+      getTweets();
+    }
+    else if (!collecting)
+      stateStack.peek().onUpdate();
+      
     stateStack.peek().onDraw();
-    
-  if (displayLoading)
+  }
+
+  if (displayLoading == true && previousLoading == false)
   {
     fill(0, 0, 0, 200);
     rect(0, 0, 1920, 1080);
     fill(255);
-    drawText("neoteric", "Time's up!" , 120, 1920 / 2, 1080 / 2 - 100, CENTER, CENTER);
-    drawText("roboto", "Quizduino is now collecting responses, \r\nany tweet sent after this time may not be collected!", 60, 1920 / 2, 1080 / 2 + 100, CENTER, CENTER);
+    drawText("neoteric", "Time's up!", 120, 1920 / 2, 1080 / 2 - 100, CENTER, CENTER);
+    drawText("roboto", "Quizduino is now collecting responses, \r\nany tweet sent after this time may not be collected!", 60, 1920 / 2, 1080 / 2 + 100, CENTER, CENTER);   
+    collecting = true;
   }
+  previousLoading = displayLoading;
 }
 
 void drawImage(String image, float x, float y)
@@ -98,102 +122,257 @@ void tickServo(int time)
 void delay(int delay)
 {
   int time = millis();
-  while(millis() - time <= delay);
+  while (millis () - time <= delay);
 }
 
 void pushStack(State state)
 {
-   if (!stateStack.empty())
-     stateStack.peek().onEnd();
-   stateStack.push(state); 
-   stateStack.peek().onSetup(this);
+  if (!stateStack.empty())
+    stateStack.peek().onEnd();
+  stateStack.push(state); 
+  stateStack.peek().onSetup(this);
+}
+
+void getTweets()
+{
+  delay(20000);
+  
+  recentTweets.put("ignore", "ignore");
+
+  Query query = new Query("#g1q_" + randomCode);
+  query.setCount(50);
+  try
+  {
+    QueryResult result = twitter.search(query);
+    for (Status status : result.getTweets ())
+    {
+      try 
+      {
+        String temp = status.getText();
+        temp = temp.toLowerCase();
+        temp = temp.replace("#g1q_" + randomCode, "");
+        temp = temp.replace("@quizduino", "");
+        temp = temp.trim();
+
+        recentTweets.put(status.getUser().getName(), temp);
+      }
+      catch (Exception ex)
+      {
+        //println("error" + ex);
+      }
+      //println("@" + status.getUser().getScreenName() + ":" + status.getText() + " [created at " + status.getCreatedAt() + "]");
+    }
+  }
+  catch (TwitterException tex)
+  {
+    //println("twitter error" + tex);
+  }
+  displayLoading = false;
+  collecting = false;
 }
 
 public class stateSplash extends State 
 {
-   Tween logoTween;
-   float logoY; 
-   int logoTimer;
-   int target;
-   boolean switched;
-   
-   void onSetup(PApplet window)
-   {
-     logoTween = new Tween(window, 1, Tween.SECONDS, Shaper.BEZIER);
-     logoY = -1200;
-     logoTimer = millis();
-     target = 60;
-     switched = false;
-   }
-   
-   void onDraw()
-   {
-     logoY = lerp(logoY, target, logoTween.position());
-     drawImage("logo", 337, logoY);
-     
-     if (!switched)
-     {
-       if (millis() > logoTimer + 6000)
-       {
-         target = -1200;
+  Tween logoTween;
+  float logoY; 
+  int logoTimer;
+  int target;
+  boolean switched;
+
+  void onSetup(PApplet window)
+  {
+    logoTween = new Tween(window, 1, Tween.SECONDS, Shaper.BEZIER);
+    logoY = -1200;
+    logoTimer = millis();
+    target = 60;
+    switched = false;
+  }
+
+  void onUpdate()
+  {
+
+    logoY = lerp(logoY, target, logoTween.position());
+
+
+    if (!switched)
+    {
+      if (millis() > logoTimer + 6000)
+      {
+        target = -1200;
         logoTween.end();
         logoTween.start();
         switched = true;
-       } 
-     }
-     else
-     {
-        if (logoY <= -1200)
-       {
-          pushStack(new stateQuery());
-       } 
-     }
+      }
+    } else
+    {
+      if (logoY <= -1200)
+      {
+        pushStack(new stateQuery());
+      }
+    }
+  }
 
-   }
-   
-   void onEnd()
-   {
-     logoTween = null;
-   }
+  void onDraw()
+  {
+    drawImage("logo", 337, logoY);
+  }
+
+  void onEnd()
+  {
+    logoTween = null;
+  }
 }
 
 public class stateQuery extends State 
 {
-   Tween textTween;
-   float textY;
-   
-   void onSetup(PApplet window)
-   {
-     textTween = new Tween(window, 1, Tween.SECONDS, Shaper.BEZIER);
-     textY = 1200;
-     randomCode = String.format("%04d", random.nextInt(9999));
-   }
-   
-   void onDraw()
-   {
-     textY = lerp(textY, 540, textTween.position());
-     
-     drawText("neoteric", "HOW MANY QUESTIONS DO\r\nYOU WANT TO PLAY?", 120, 1920 / 2, textY - 150, CENTER, CENTER);
-      drawText("roboto", "Respond with #g1q_" + randomCode + " <number of questions>", 60, 1920 / 2, textY + 150, CENTER, CENTER);
+  Tween textTween;
+  float textY;
+  
+  int timer = 20000;
 
-      drawText("roboto", "You have 30 seconds to enter how many questons you\r\nwant to play. The responses will be averaged to generate a quiz!", 30, 1920 / 2, textY + 250, CENTER, CENTER);
+  void onSetup(PApplet window)
+  {
+    recentTweets = new HashMap<String, String>();
 
+    textTween = new Tween(window, 1, Tween.SECONDS, Shaper.BEZIER);
+    textY = 1200;
+    randomCode = String.format("%04d", random.nextInt(9999));
+  }
+
+  void onUpdate()
+  {
+    textY = lerp(textY, 540, textTween.position());
+
+    if (!recentTweets.isEmpty())
+    {
+      pushStack(new stateQuestionsToPlay());
+      return;
+    }
+    
     if (textY <= 540)
     {
-      tickServo(10000);
+      tickServo(timer);
+
       displayLoading = true;
     }
-   }
-   
-   void onEnd()
-   {
-     textTween = null;
-   }
+  }
+
+  void onDraw()
+  {
+
+    drawText("neoteric", "HOW MANY QUESTIONS DO\r\nYOU WANT TO PLAY?", 120, 1920 / 2, textY - 150, CENTER, CENTER);
+    drawText("roboto", "Respond with #g1q_" + randomCode + " <number of questions>", 60, 1920 / 2, textY + 150, CENTER, CENTER);
+
+    drawText("roboto", "You have " + timer / 1000 + " seconds to enter how many questons you\r\nwant to play. The responses will be averaged to generate a quiz!", 30, 1920 / 2, textY + 250, CENTER, CENTER);
+  }
+
+  void onEnd()
+  {
+    textTween = null;
+  }
 }
+
+
+public class stateQuestionsToPlay extends State 
+{   
+  int average;
+  boolean hadResponse;
+  
+  void onSetup(PApplet window)
+  {
+    int count = 0;
+    int total = 0;
+    
+    for (String value : recentTweets.values ())
+    {
+      println(value);
+      try {
+        int temp = Integer.parseInt(value);
+        if (temp <= 0) throw new Exception();
+        if (temp > 40) throw new Exception();
+        
+        total += temp;
+        count++;
+      }
+      catch (Exception ex)
+      {
+      }
+    }
+     
+    hadResponse = true;
+    if (total == 0 && count == 0) hadResponse = false;
+    
+    if (total == 0) total = 20;
+    if (count == 0) count = 1;
+  
+    average = total / count; 
+    
+    questions.newGame(average);
+  }
+
+  void onUpdate()
+  {
+    drawText("neoteric", "We are playing", 60, 1920 / 2, 1080 / 2 - 330, CENTER, CENTER);
+    drawText("lobster", average + "", 600, 1920 / 2, 1080 / 2, CENTER, CENTER);
+    drawText("neoteric", "questions", 60, 1920 / 2, 1080 / 2 + 270, CENTER, CENTER);
+    
+  }
+
+  void onDraw()
+  {
+  }
+
+  void onEnd()
+  {
+  }
+}
+
 
 public abstract class State 
 {
   abstract void onSetup(PApplet window);
+  abstract void onUpdate();
   abstract void onDraw();
   abstract void onEnd();
 }
+
+class QuestionManager
+{
+    QuestionList questions = new QuestionList();
+    Queue<Question> game;
+    
+  public void loadQuestions()
+  {
+    String[] qs = loadStrings("questions.txt");
+    
+    StringBuilder builder = new StringBuilder();
+    for(String s : qs) {
+        builder.append(s);
+    }
+    String qss = builder.toString();
+   
+    Gson gson = new GsonBuilder().create();
+    questions = gson.fromJson(qss, QuestionList.class);
+  }
+  
+  public void newGame(int x)
+  {
+     Collections.shuffle(questions.questions);
+    game = new LinkedList<Question>(questions.questions.subList(0, x));
+  }
+}
+
+class QuestionList
+{
+  List<Question> questions = new ArrayList<Question>();
+}
+
+class Question
+{
+  private String question;
+  private String correctAnswer;
+  private String wrongAnswers;
+
+}
+
+
