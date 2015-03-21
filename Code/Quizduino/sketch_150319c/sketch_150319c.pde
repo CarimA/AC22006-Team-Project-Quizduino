@@ -46,6 +46,10 @@ void setup()
   images = new HashMap<String, PImage>();
   images.put("background", loadImage("bg.png"));
   images.put("logo", loadImage("logo.png"));
+  
+  images.put("label", loadImage("question_label.png"));
+  images.put("label-correct", loadImage("question_correct.png"));
+  images.put("label-wrong", loadImage("question_wrong.png"));
 
   fonts = new HashMap<String, PFont>();
   fonts.put("neoteric", createFont("neoteric.ttf", 60));
@@ -58,7 +62,7 @@ void setup()
   questions = new QuestionManager();
   questions.loadQuestions();
 
-  frameRate(120);
+  frameRate(120);      
 }
 
 void draw()
@@ -126,7 +130,7 @@ void popStack() // really, this should return something, but the functionality i
 
 void getTweets()
 {
-  delay(20000);
+  tickServo(20000);
   
   recentTweets.put("ignore", "ignore");
 
@@ -359,11 +363,12 @@ public class stateQuestion extends State
       
       if (!questions.isLastQuestion())
       {
-        pushStack(new stateQuestion());
+        //pushStack(new stateQuestion());
       }
       else
       {
          // game's up!
+         pushStack(new stateQuestion());
       }
     }
 
@@ -378,10 +383,21 @@ public class stateQuestion extends State
 
   void onDraw()
   {
-        // 37, 357
-      
+    drawImage("label", 37, 537);
+    drawImage("label", 967, 537);
+    drawImage("label", 37, 707);
+    drawImage("label", 967, 707);
+    
+    drawText("roboto", "A", 120, 70, 545, LEFT, TOP, true);
+    drawText("roboto", "B", 120, 990, 545, LEFT, TOP, true);
+    drawText("roboto", "C", 120, 70, 715, LEFT, TOP, true);
+    drawText("roboto", "D", 120, 990, 715, LEFT, TOP, true);
+         
     drawText("neoteric", "QUESTION " + getNumberAsWord(qNo), 120, 1920 / 2, 100, CENTER, CENTER, false);
-    drawText("roboto", q.question, 60, 1920 / 2, 200, CENTER, CENTER, false);
+    drawText("roboto", q.question, 60, 1920 / 2, 350, CENTER, CENTER, false);
+    
+    drawText("roboto", "Respond with #g1q_" + randomCode + " <number of questions>", 60, 1920 / 2, textY + 150, CENTER, CENTER, false);
+    drawText("roboto", "You have " + timer / 1000 + " seconds enter your answer!", 30, 1920 / 2, textY + 250, CENTER, CENTER, false);
 
 
      firstFrame = true;
@@ -423,7 +439,7 @@ public class stateQuestionsToPlay extends State
     hadResponse = true;
     if (total == 0 && count == 0) hadResponse = false;
     
-    if (total == 0) total = 20;
+    if (total == 0) total = 3;
     if (count == 0) count = 1;
   
     average = total / count; 
