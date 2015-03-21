@@ -119,9 +119,9 @@ void pushStack(State state)
 
 void popStack() // really, this should return something, but the functionality isn't really needed.
 {
-  stateStack.peek().onEnd();
+  //stateStack.peek().onEnd();
    stateStack.pop();
-     stateStack.peek().onSetup(this);
+     //stateStack.peek().onSetup(this);
 }
 
 void getTweets()
@@ -299,8 +299,6 @@ public class stateQuery extends State
 
   void onSetup(PApplet window)
   {
-    recentTweets = new HashMap<String, String>();
-
     textTween = new Tween(window, 1, Tween.SECONDS, Shaper.BEZIER);
     textY = 1200;
     randomCode = String.format("%04d", random.nextInt(9999));
@@ -334,6 +332,61 @@ public class stateQuery extends State
   }
 }
 
+public class stateQuestion extends State
+{
+  boolean firstFrame;
+  int timer = 30000;
+   
+  void onSetup(PApplet window)
+  {
+    recentTweets = new HashMap<String, String>();
+    randomCode = String.format("%04d", random.nextInt(9999));
+    firstFrame = false;
+  }
+
+  void onUpdate()
+  {    
+    if (!recentTweets.isEmpty())
+    {
+      // now, check if the questions are right, and display them.
+      
+      if (!question.isLastQuestion())
+      {
+        pushStack(new stateQuestion());
+      }
+      else
+      {
+         // game's up!
+      }
+    }
+
+    if (firstFrame)
+    {
+      tickServo(timer);
+      pushStack(new stateLoading());
+      
+      
+    }
+  }
+
+  void onDraw()
+  {
+        // 37, 357
+
+    drawText("neoteric", "HOW MANY QUESTIONS DO\r\nYOU WANT TO PLAY?", 120, 1920 / 2, textY - 150, CENTER, CENTER, false);
+    drawText("roboto", "Respond with #g1q_" + randomCode + " <number of questions>", 60, 1920 / 2, textY + 150, CENTER, CENTER, false);
+
+    drawText("roboto", "You have " + timer / 1000 + " seconds to enter how many questons you\r\nwant to play. The responses will be averaged to generate a quiz!", 30, 1920 / 2, textY + 250, CENTER, CENTER, false);
+    
+    firstframe = true;
+  }
+
+  void onEnd()
+  {
+    textTween = null;
+  }
+}
+
 
 public class stateQuestionsToPlay extends State 
 {   
@@ -344,6 +397,7 @@ public class stateQuestionsToPlay extends State
   {
     int count = 0;
     int total = 0;
+    boolean firstFrame;
     
     for (String value : recentTweets.values ())
     {
@@ -369,19 +423,24 @@ public class stateQuestionsToPlay extends State
   
     average = total / count; 
     
-    questions.newGame(average);
+    firstFrame = false;
   }
 
   void onUpdate()
   {
-    drawText("roboto", "We are playing", 60, 1920 / 2, 1080 / 2 - 330, CENTER, CENTER, false);
-    drawText("lobster", average + "", 600, 1920 / 2, 1080 / 2, CENTER, CENTER, true);
-    drawText("roboto", "questions", 60, 1920 / 2, 1080 / 2 + 270, CENTER, CENTER, false);
-    
+    if (firstFrame)
+    {
+      questions.newGame(average);
+       pushStack(new stateQuestion());      
+    }
   }
 
   void onDraw()
-  {
+  {    
+    drawText("roboto", "We are playing", 60, 1920 / 2, 1080 / 2 - 330, CENTER, CENTER, false);
+    drawText("lobster", average + "", 600, 1920 / 2, 1080 / 2, CENTER, CENTER, true);
+    drawText("roboto", "questions", 60, 1920 / 2, 1080 / 2 + 270, CENTER, CENTER, false);
+    firstFrame = true;
   }
 
   void onEnd()
@@ -421,6 +480,16 @@ class QuestionManager
   {
      Collections.shuffle(questions.questions);
     game = new LinkedList<Question>(questions.questions.subList(0, x));    
+  }
+  
+  public Question getNextQuestion()
+  {
+     return game.pop(); 
+  }
+  
+  public boolean isLastQuestion()
+  {
+     return game.size() == 1; 
   }
 }
 
