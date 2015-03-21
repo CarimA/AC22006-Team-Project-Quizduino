@@ -27,7 +27,7 @@ int randomCode;
 void setup() {
   size(1920, 1080);
   
-  ard = new Arduino(this, Arduino.list()[2], 57600);
+  ard = new Arduino(this, Arduino.list()[0], 57600);
   ard.pinMode(servoPin, 4);
   ard.pinMode(buzzerPin, Arduino.OUTPUT);
   
