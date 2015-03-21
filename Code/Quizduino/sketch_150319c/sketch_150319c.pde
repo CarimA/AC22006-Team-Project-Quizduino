@@ -169,42 +169,45 @@ String getNumberAsWord(int input)
      case 2: return "two";
      case 3: return "three";
      case 4: return "four";
-     case 5; return "five";
-     case 6; return "six";
-     case 7; return "seven";
-     case 8; return "eight";
-     case 9; return "nine";
-     case 10; return "ten";
-     case 11; return "eleven";
-     case 12; return "twelve";
-     case 13; return "thirteen";
-     case 14; return "fourteen";
-     case 15; return "fifteen";
-     case 16; return "sixteen";
-     case 17; return "seventeen";
-     case 18; return "eighteen";
-     case 19; return "nineteen";
-     case 20; return "tweenty";
-     case 21; return "twenty one";
-     case 22; return "twenty two";
-     case 23; return "twenty three";
-     case 24; return "twenty four";
-     case 25; return "twenty five";
-     case 26; return "twenty six";
-     case 27; return "twenty seven";
-     case 28; return "twenty eight";
-     case 29; return "twenty nine";
-     case 30; return "thirty";
-     case 31; return "thirty one";
-     case 32; return "thirty two";
-     case 33; return "thirty three";
-     case 34; return "thirty four";
-     case 35; return "thirty five";
-     case 36; return "thirty six";
-     case 37; return "thirty seven";
-     case 38; return "thirty eight";
-     case 39; return "thirty nine";
-     case 40; return "fourty";
+     case 5: return "five";
+     case 6: return "six";
+     case 7: return "seven";
+     case 8: return "eight";
+     case 9: return "nine";
+     case 10: return "ten";
+     case 11: return "eleven";
+     case 12: return "twelve";
+     case 13: return "thirteen";
+     case 14: return "fourteen";
+     case 15: return "fifteen";
+     case 16: return "sixteen";
+     case 17: return "seventeen";
+     case 18: return "eighteen";
+     case 19: return "nineteen";
+     case 20: return "tweenty";
+     case 21: return "twenty one";
+     case 22: return "twenty two";
+     case 23: return "twenty three";
+     case 24: return "twenty four";
+     case 25: return "twenty five";
+     case 26: return "twenty six";
+     case 27: return "twenty seven";
+     case 28: return "twenty eight";
+     case 29: return "twenty nine";
+     case 30: return "thirty";
+     case 31: return "thirty one";
+     case 32: return "thirty two";
+     case 33: return "thirty three";
+     case 34: return "thirty four";
+     case 35: return "thirty five";
+     case 36: return "thirty six";
+     case 37: return "thirty seven";
+     case 38: return "thirty eight";
+     case 39: return "thirty nine";
+     case 40: return "forty";
+   }
+   return "";
+}
       
 public class stateLoading extends State
 {
@@ -336,12 +339,16 @@ public class stateQuestion extends State
 {
   boolean firstFrame;
   int timer = 30000;
+   Question q;
+   int qNo; 
    
   void onSetup(PApplet window)
   {
     recentTweets = new HashMap<String, String>();
     randomCode = String.format("%04d", random.nextInt(9999));
     firstFrame = false;
+    q = questions.getNextQuestion();
+    qNo = questions.getQuestionNo();
   }
 
   void onUpdate()
@@ -350,7 +357,7 @@ public class stateQuestion extends State
     {
       // now, check if the questions are right, and display them.
       
-      if (!question.isLastQuestion())
+      if (!questions.isLastQuestion())
       {
         pushStack(new stateQuestion());
       }
@@ -372,18 +379,16 @@ public class stateQuestion extends State
   void onDraw()
   {
         // 37, 357
+      
+    drawText("neoteric", "QUESTION " + getNumberAsWord(qNo), 120, 1920 / 2, 100, CENTER, CENTER, false);
+    drawText("roboto", q.question, 60, 1920 / 2, 200, CENTER, CENTER, false);
 
-    drawText("neoteric", "HOW MANY QUESTIONS DO\r\nYOU WANT TO PLAY?", 120, 1920 / 2, textY - 150, CENTER, CENTER, false);
-    drawText("roboto", "Respond with #g1q_" + randomCode + " <number of questions>", 60, 1920 / 2, textY + 150, CENTER, CENTER, false);
 
-    drawText("roboto", "You have " + timer / 1000 + " seconds to enter how many questons you\r\nwant to play. The responses will be averaged to generate a quiz!", 30, 1920 / 2, textY + 250, CENTER, CENTER, false);
-    
-    firstframe = true;
+     firstFrame = true;
   }
 
   void onEnd()
   {
-    textTween = null;
   }
 }
 
@@ -392,12 +397,12 @@ public class stateQuestionsToPlay extends State
 {   
   int average;
   boolean hadResponse;
+    boolean firstFrame;
   
   void onSetup(PApplet window)
   {
     int count = 0;
     int total = 0;
-    boolean firstFrame;
     
     for (String value : recentTweets.values ())
     {
@@ -431,6 +436,7 @@ public class stateQuestionsToPlay extends State
     if (firstFrame)
     {
       questions.newGame(average);
+        delay(5000);
        pushStack(new stateQuestion());      
     }
   }
@@ -461,6 +467,7 @@ class QuestionManager
 {
     QuestionList questions = new QuestionList();
     Queue<Question> game;
+    int count = 0;
     
   public void loadQuestions()
   {
@@ -480,11 +487,18 @@ class QuestionManager
   {
      Collections.shuffle(questions.questions);
     game = new LinkedList<Question>(questions.questions.subList(0, x));    
+    count++;
+  }
+  
+  
+  public int getQuestionNo()
+  {
+   return count; 
   }
   
   public Question getNextQuestion()
   {
-     return game.pop(); 
+     return game.remove(); 
   }
   
   public boolean isLastQuestion()
