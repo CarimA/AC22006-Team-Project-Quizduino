@@ -3,6 +3,7 @@ import megamu.shapetween.*;
 import java.util.*;
 import processing.serial.*;
 import cc.arduino.*;
+import ddf.minim.*;
 
 // state management
 public Stack<State> stateStack;
@@ -22,6 +23,10 @@ HashMap<String, PFont> fonts;
 
 // question management
 QuestionManager questions;
+
+// audio management
+AudioPlayer ap;
+Minim minim;
 
 // misc.
 Random random = new Random();
@@ -61,8 +66,20 @@ void setup()
   
   questions = new QuestionManager();
   questions.loadQuestions();
+  
+  minim = new Minim(this);
+  ap = minim.loadFile("song.mp3", 2048);
+  ap.play();
+  ap.loop();
 
   frameRate(120);      
+}
+
+void stop() 
+{
+  ap.close();
+  minim.stop();
+  super.stop();
 }
 
 void draw()
@@ -87,11 +104,11 @@ void drawText(String font, String text, int size, float x, float y, int alignX, 
   textFont(fonts.get(font), size);
   textAlign(alignX, alignY);
   
-  if (shadow)
-    {
+  //if (shadow)
+  //  {
     fill(0, 0, 0, 130);
     text(text, x, y + 3);
-  }
+  //}
   
   fill(255);
   text(text, x, y);
@@ -358,7 +375,7 @@ public class stateQuery extends State
     drawText("neoteric", "HOW MANY QUESTIONS DO\r\nYOU WANT TO PLAY?", 120, 1920 / 2, textY - 150, CENTER, CENTER, false);
     drawText("roboto", "Respond with #g1q_" + randomCode + " <number of questions>\r\nOne question takes roughly one minute.", 60, 1920 / 2, textY + 150, CENTER, CENTER, false);
 
-    drawText("roboto", "You have " + timer / 1000 + " seconds to enter how many questons you\r\nwant to play. The responses will be averaged to generate a quiz!", 30, 1920 / 2, textY + 350, CENTER, CENTER, false);
+    drawText("roboto", "You have " + timer / 1000 + " seconds to enter how many questons you\r\nwant to play. The responses will be averaged to generate a quiz!\r\nResponses greater than 30 will be ignored.", 30, 1920 / 2, textY + 350, CENTER, CENTER, false);
   }
 
   void onEnd()
@@ -536,7 +553,7 @@ public class stateQuestionsToPlay extends State
       try {
         int temp = Integer.parseInt(value);
         if (temp <= 0) throw new Exception();
-        if (temp > 40) throw new Exception();
+        if (temp > 30) throw new Exception();
         
         total += temp;
         count++;
@@ -549,7 +566,7 @@ public class stateQuestionsToPlay extends State
     hadResponse = true;
     if (total == 0 && count == 0) hadResponse = false;
     
-    if (total == 0) total = 3;
+    if (total == 0) total = 10;
     if (count == 0) count = 1;
   
     average = total / count; 

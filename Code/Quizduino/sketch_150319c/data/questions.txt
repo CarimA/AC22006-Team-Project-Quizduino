@@ -98,7 +98,7 @@
 	  {
 		"question": "Why do crocodiles leave their mouth open for a long time?",
 		"correctAnswer": "To stay warm",
-		"wrongAnswers": "To drink water\r\nTo digest food\r\nTo wait for an\ranimal to drop in"
+		"wrongAnswers": "To drink water\r\nTo digest food\r\nTo wait for an\nanimal to drop in"
 	  },
 	  {
 		"question": "Why is The Dead Sea called that way?",
