@@ -46,9 +46,8 @@ void setup() {
   images.put("logo", loadImage("logo.png"));
 
   fonts = new HashMap<String, PFont>();
-  fonts.put("neoteric_large", createFont("neoteric.ttf", 120));
-  fonts.put("roboto_thin_normal", createFont("roboto-thin.ttf", 60));
-  fonts.put("roboto_thin_small", createFont("roboto-thin.ttf", 30));
+  fonts.put("neoteric", createFont("neoteric.ttf", 120));
+  fonts.put("roboto", createFont("roboto-thin.ttf", 60));
 
   state = STATE_INTRO;
 
@@ -108,10 +107,10 @@ float tempTextY;
 void drawStateAmount()
 {
   tempTextY = lerp(tempTextY, 1080 / 2, amountY.position());
-  drawText("neoteric_large", "HOW MANY QUESTIONS DO\r\nYOU WANT TO PLAY?", 120, 1920 / 2, tempTextY - 150, CENTER, CENTER);
-  drawText("roboto_thin_normal", "Respond with #g1q_" + randomCode + " <number of questions>", 60, 1920 / 2, tempTextY + 150, CENTER, CENTER);
+  drawText("neoteric", "HOW MANY QUESTIONS DO\r\nYOU WANT TO PLAY?", 120, 1920 / 2, tempTextY - 150, CENTER, CENTER);
+  drawText("roboto", "Respond with #g1q_" + randomCode + " <number of questions>", 60, 1920 / 2, tempTextY + 150, CENTER, CENTER);
 
-  drawText("roboto_thin_small", "You have 30 seconds to enter how many questons you\r\nwant to play. The responses will be averaged to generate a quiz!", 30, 1920 / 2, tempTextY + 250, CENTER, CENTER);
+  drawText("roboto", "You have 30 seconds to enter how many questons you\r\nwant to play. The responses will be averaged to generate a quiz!", 30, 1920 / 2, tempTextY + 250, CENTER, CENTER);
 
   if (tempTextY >= 1080 / 2)
   {
@@ -151,6 +150,10 @@ void drawStateAmount()
   {
     //println("twitter error" + tex);
   }
+  
+  boolean hadResponse = true;
+  
+  if (total == 0 && count == 0) hadResponse = false;
   
   if (total == 0) total = 20;
   if (count == 0) count = 1;
