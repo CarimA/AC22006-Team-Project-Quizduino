@@ -6,9 +6,6 @@ import cc.arduino.*;
 
 // state management
 public Stack<State> stateStack;
-boolean previousLoading;
-boolean displayLoading;
-boolean collecting;
 
 // serial management
 Arduino ard;
@@ -56,9 +53,6 @@ void setup()
   fonts.put("lobster", createFont("lobster.otf", 60));
 
   stateStack = new Stack<State>();
-  previousLoading = false;
-  displayLoading = false;
-  collecting = false;
   pushStack(new stateSplash());
   
   questions = new QuestionManager();
@@ -74,27 +68,9 @@ void draw()
 
   if (!stateStack.empty())
   {
-    if (collecting)
-    {
-      recentTweets = new HashMap<String, String>();
-      getTweets();
-    }
-    else if (!collecting)
-      stateStack.peek().onUpdate();
-      
+    stateStack.peek().onUpdate();      
     stateStack.peek().onDraw();
   }
-
-  if (displayLoading == true && previousLoading == false)
-  {
-    fill(0, 0, 0, 200);
-    rect(0, 0, 1920, 1080);
-    fill(255);
-    drawText("neoteric", "Time's up!", 120, 1920 / 2, 1080 / 2 - 100, CENTER, CENTER);
-    drawText("roboto", "Quizduino is now collecting responses, \r\nany tweet sent after this time may not be collected!", 60, 1920 / 2, 1080 / 2 + 100, CENTER, CENTER);   
-    collecting = true;
-  }
-  previousLoading = displayLoading;
 }
 
 void drawImage(String image, float x, float y)
@@ -102,10 +78,18 @@ void drawImage(String image, float x, float y)
   image(images.get(image), x, y);
 }
 
-void drawText(String font, String text, int size, float x, float y, int alignX, int alignY)
+void drawText(String font, String text, int size, float x, float y, int alignX, int alignY, boolean shadow)
 {
   textFont(fonts.get(font), size);
   textAlign(alignX, alignY);
+  
+  if (shadow)
+    {
+    fill(0, 0, 0, 130);
+    text(text, x, y + 3);
+  }
+  
+  fill(255);
   text(text, x, y);
 }
 
@@ -131,6 +115,13 @@ void pushStack(State state)
     stateStack.peek().onEnd();
   stateStack.push(state); 
   stateStack.peek().onSetup(this);
+}
+
+void popStack() // really, this should return something, but the functionality isn't really needed.
+{
+  stateStack.peek().onEnd();
+   stateStack.pop();
+     stateStack.peek().onSetup(this);
 }
 
 void getTweets()
@@ -167,8 +158,49 @@ void getTweets()
   {
     //println("twitter error" + tex);
   }
-  displayLoading = false;
-  collecting = false;
+}
+
+String getNumberAsWord(int input)
+{
+   switch (input)
+   {
+     case 0: return "zero";
+     case 1: return "one";
+     case 2: return "two";
+     case 3: return "three";
+     case 4: return "four";
+     case 
+
+public class stateLoading extends State
+{
+   boolean firstFrame;
+   void onSetup(PApplet window)
+  {
+      recentTweets = new HashMap<String, String>();
+      firstFrame = false;
+  } 
+  
+  void onUpdate()
+  {
+    if (firstFrame)     
+      getTweets();
+    
+    if (!recentTweets.isEmpty())
+      popStack();
+  }
+  
+  void onDraw()
+  {
+    fill(255);
+    drawText("neoteric", "Time's up!", 120, 1920 / 2, 1080 / 2 - 100, CENTER, CENTER, true);
+    drawText("roboto", "Quizduino is now collecting responses, \r\nany tweet sent after this time may not be collected!", 60, 1920 / 2, 1080 / 2 + 100, CENTER, CENTER, true);   
+    firstFrame = true;
+  }
+  
+  void onEnd()
+  {
+    
+  }
 }
 
 public class stateSplash extends State 
@@ -228,7 +260,7 @@ public class stateQuery extends State
   Tween textTween;
   float textY;
   
-  int timer = 20000;
+  int timer = 2000;
 
   void onSetup(PApplet window)
   {
@@ -243,27 +275,22 @@ public class stateQuery extends State
   {
     textY = lerp(textY, 540, textTween.position());
 
-    if (!recentTweets.isEmpty())
-    {
-      pushStack(new stateQuestionsToPlay());
-      return;
-    }
-    
     if (textY <= 540)
     {
       tickServo(timer);
-
-      displayLoading = true;
+      
+      pushStack(new stateQuestionsToPlay());
+      pushStack(new stateLoading());
     }
   }
 
   void onDraw()
   {
 
-    drawText("neoteric", "HOW MANY QUESTIONS DO\r\nYOU WANT TO PLAY?", 120, 1920 / 2, textY - 150, CENTER, CENTER);
-    drawText("roboto", "Respond with #g1q_" + randomCode + " <number of questions>", 60, 1920 / 2, textY + 150, CENTER, CENTER);
+    drawText("neoteric", "HOW MANY QUESTIONS DO\r\nYOU WANT TO PLAY?", 120, 1920 / 2, textY - 150, CENTER, CENTER, false);
+    drawText("roboto", "Respond with #g1q_" + randomCode + " <number of questions>", 60, 1920 / 2, textY + 150, CENTER, CENTER, false);
 
-    drawText("roboto", "You have " + timer / 1000 + " seconds to enter how many questons you\r\nwant to play. The responses will be averaged to generate a quiz!", 30, 1920 / 2, textY + 250, CENTER, CENTER);
+    drawText("roboto", "You have " + timer / 1000 + " seconds to enter how many questons you\r\nwant to play. The responses will be averaged to generate a quiz!", 30, 1920 / 2, textY + 250, CENTER, CENTER, false);
   }
 
   void onEnd()
@@ -312,9 +339,9 @@ public class stateQuestionsToPlay extends State
 
   void onUpdate()
   {
-    drawText("neoteric", "We are playing", 60, 1920 / 2, 1080 / 2 - 330, CENTER, CENTER);
-    drawText("lobster", average + "", 600, 1920 / 2, 1080 / 2, CENTER, CENTER);
-    drawText("neoteric", "questions", 60, 1920 / 2, 1080 / 2 + 270, CENTER, CENTER);
+    drawText("roboto", "We are playing", 60, 1920 / 2, 1080 / 2 - 330, CENTER, CENTER, false);
+    drawText("lobster", average + "", 600, 1920 / 2, 1080 / 2, CENTER, CENTER, true);
+    drawText("roboto", "questions", 60, 1920 / 2, 1080 / 2 + 270, CENTER, CENTER, false);
     
   }
 
@@ -358,7 +385,7 @@ class QuestionManager
   public void newGame(int x)
   {
      Collections.shuffle(questions.questions);
-    game = new LinkedList<Question>(questions.questions.subList(0, x));
+    game = new LinkedList<Question>(questions.questions.subList(0, x));    
   }
 }
 
