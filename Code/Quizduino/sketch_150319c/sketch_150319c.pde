@@ -130,7 +130,7 @@ void popStack() // really, this should return something, but the functionality i
 
 void getTweets()
 {
-  tickServo(20000);
+  tickServo(3000);
   
   recentTweets.put("ignore", "ignore");
 
@@ -211,6 +211,34 @@ String getNumberAsWord(int input)
      case 40: return "Forty";
    }
    return "";
+}
+
+private void ShuffleArray(int[] array)
+{
+    int index;
+    int temp;
+    Random random = new Random();
+    for (int i = array.length - 1; i > 0; i--)
+    {
+        index = random.nextInt(i + 1);
+        temp = array[index];
+        array[index] = array[i];
+        array[i] = temp;
+    }
+}
+
+private void ShuffleArray(String[] array)
+{
+    int index;
+    String temp;
+    Random random = new Random();
+    for (int i = array.length - 1; i > 0; i--)
+    {
+        index = random.nextInt(i + 1);
+        temp = array[index];
+        array[index] = array[i];
+        array[i] = temp;
+    }
 }
       
 public class stateLoading extends State
@@ -328,9 +356,9 @@ public class stateQuery extends State
   {
 
     drawText("neoteric", "HOW MANY QUESTIONS DO\r\nYOU WANT TO PLAY?", 120, 1920 / 2, textY - 150, CENTER, CENTER, false);
-    drawText("roboto", "Respond with #g1q_" + randomCode + " <number of questions>", 60, 1920 / 2, textY + 150, CENTER, CENTER, false);
+    drawText("roboto", "Respond with #g1q_" + randomCode + " <number of questions>\r\nOne question takes roughly one minute.", 60, 1920 / 2, textY + 150, CENTER, CENTER, false);
 
-    drawText("roboto", "You have " + timer / 1000 + " seconds to enter how many questons you\r\nwant to play. The responses will be averaged to generate a quiz!", 30, 1920 / 2, textY + 250, CENTER, CENTER, false);
+    drawText("roboto", "You have " + timer / 1000 + " seconds to enter how many questons you\r\nwant to play. The responses will be averaged to generate a quiz!", 30, 1920 / 2, textY + 350, CENTER, CENTER, false);
   }
 
   void onEnd()
@@ -342,9 +370,14 @@ public class stateQuery extends State
 public class stateQuestion extends State
 {
   boolean firstFrame;
-  int timer = 30000;
+  int timer = 7000;
    Question q;
    int qNo; 
+   
+   int[] index = { 0, 1, 2, 3 };
+   int correctAnswer;
+   String[] wrongAnswer;
+   boolean delayFrame;
    
   void onSetup(PApplet window)
   {
@@ -353,17 +386,23 @@ public class stateQuestion extends State
     firstFrame = false;
     q = questions.getNextQuestion();
     qNo = questions.getQuestionNo();
+    ShuffleArray(index);
+    correctAnswer = index[0];
+    wrongAnswer = q.wrongAnswers.split("\r\n");
+    ShuffleArray(wrongAnswer);
+    delayFrame = false;
   }
 
   void onUpdate()
   {    
-    if (!recentTweets.isEmpty())
+    if (!recentTweets.isEmpty() && delayFrame)
     {
+        delay(5000);
       // now, check if the questions are right, and display them.
       
       if (!questions.isLastQuestion())
       {
-        //pushStack(new stateQuestion());
+        pushStack(new stateQuestion());
       }
       else
       {
@@ -372,33 +411,104 @@ public class stateQuestion extends State
       }
     }
 
-    if (firstFrame)
+    if (firstFrame && !delayFrame)
     {
       tickServo(timer);
-      pushStack(new stateLoading());
-      
-      
+      pushStack(new stateLoading());    
     }
   }
 
   void onDraw()
   {
-    drawImage("label", 37, 537);
-    drawImage("label", 967, 537);
-    drawImage("label", 37, 707);
-    drawImage("label", 967, 707);
+    if (!recentTweets.isEmpty())
+    {
+      switch (index[0])
+      {
+        case 0:
+        drawImage("label-correct", 37, 537);
+        drawImage("label-wrong", 967, 537);
+        drawImage("label-wrong", 37, 707);
+        drawImage("label-wrong", 967, 707);
+        break;
+        
+        case 1:
+        drawImage("label-wrong", 37, 537);
+        drawImage("label-correct", 967, 537);
+        drawImage("label-wrong", 37, 707);
+        drawImage("label-wrong", 967, 707);
+        break;
+        
+        case 2:
+        drawImage("label-wrong", 37, 537);
+        drawImage("label-wrong", 967, 537);
+        drawImage("label-correct", 37, 707);
+        drawImage("label-wrong", 967, 707);
+        break;
+        
+        case 3:
+        drawImage("label-wrong", 37, 537);
+        drawImage("label-wrong", 967, 537);
+        drawImage("label-wrong", 37, 707);
+        drawImage("label-correct", 967, 707);
+        break;
+      }        
+      delayFrame = true;
+    }
+    else
+    {
+      drawImage("label", 37, 537);
+      drawImage("label", 967, 537);
+      drawImage("label", 37, 707);
+      drawImage("label", 967, 707);
+      
+      drawText("roboto", "Respond with #g1q_" + randomCode + " <letter>", 60, 1920 / 2, 900, CENTER, CENTER, false);
+      drawText("roboto", "You have " + timer / 1000 + " seconds enter your answer!", 30, 1920 / 2, 1000, CENTER, CENTER, false);
+    }
+    
     
     drawText("roboto", "A", 120, 70, 545, LEFT, TOP, true);
     drawText("roboto", "B", 120, 990, 545, LEFT, TOP, true);
     drawText("roboto", "C", 120, 70, 715, LEFT, TOP, true);
     drawText("roboto", "D", 120, 990, 715, LEFT, TOP, true);
-         
-    drawText("neoteric", "QUESTION " + getNumberAsWord(qNo), 120, 1920 / 2, 100, CENTER, CENTER, false);
-    drawText("roboto", q.question, 60, 1920 / 2, 350, CENTER, CENTER, false);
     
-    drawText("roboto", "Respond with #g1q_" + randomCode + " <number of questions>", 60, 1920 / 2, textY + 150, CENTER, CENTER, false);
-    drawText("roboto", "You have " + timer / 1000 + " seconds enter your answer!", 30, 1920 / 2, textY + 250, CENTER, CENTER, false);
-
+    
+    switch (index[0])
+    {
+      case 0: 
+        drawText("roboto", q.correctAnswer, 60, 160, 545, LEFT, TOP, true);
+        
+        drawText("roboto", wrongAnswer[0], 60, 1080, 545, LEFT, TOP, true);
+        drawText("roboto", wrongAnswer[1], 60, 160, 715, LEFT, TOP, true);
+        drawText("roboto", wrongAnswer[2], 60, 1080, 715, LEFT, TOP, true);
+        break;
+        
+      case 1:
+        drawText("roboto", q.correctAnswer, 60, 1080, 545, LEFT, TOP, true);
+        
+        drawText("roboto", wrongAnswer[0], 60, 160, 545, LEFT, TOP, true);
+        drawText("roboto", wrongAnswer[1], 60, 160, 715, LEFT, TOP, true);
+        drawText("roboto", wrongAnswer[2], 60, 1080, 715, LEFT, TOP, true);
+        break;
+      
+      case 2:
+        drawText("roboto", q.correctAnswer, 60, 160, 715, LEFT, TOP, true);
+        
+        drawText("roboto", wrongAnswer[0], 60, 160, 545, LEFT, TOP, true);
+        drawText("roboto", wrongAnswer[1], 60, 1080, 545, LEFT, TOP, true);
+        drawText("roboto", wrongAnswer[2], 60, 1080, 715, LEFT, TOP, true);
+        break;
+      
+      case 3:
+        drawText("roboto", q.correctAnswer, 60, 1080, 715, LEFT, TOP, true);
+        
+        drawText("roboto", wrongAnswer[0], 60, 160, 545, LEFT, TOP, true);
+        drawText("roboto", wrongAnswer[1], 60, 1080, 545, LEFT, TOP, true);
+        drawText("roboto", wrongAnswer[2], 60, 160, 715, LEFT, TOP, true);
+        break;
+    }
+         
+    drawText("neoteric", "QUESTION " + getNumberAsWord(qNo).toUpperCase(), 120, 1920 / 2, 100, CENTER, CENTER, false);
+    drawText("roboto", q.question, 60, 1920 / 2, 350, CENTER, CENTER, false);
 
      firstFrame = true;
   }
@@ -502,10 +612,8 @@ class QuestionManager
   public void newGame(int x)
   {
      Collections.shuffle(questions.questions);
-    game = new LinkedList<Question>(questions.questions.subList(0, x));    
-    count++;
-  }
-  
+    game = new LinkedList<Question>(questions.questions.subList(0, x)); 
+  }  
   
   public int getQuestionNo()
   {
@@ -513,7 +621,8 @@ class QuestionManager
   }
   
   public Question getNextQuestion()
-  {
+  {   
+     count++;
      return game.remove(); 
   }
   
