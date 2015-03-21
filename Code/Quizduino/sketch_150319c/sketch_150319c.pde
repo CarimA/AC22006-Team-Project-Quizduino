@@ -188,7 +188,7 @@ String getNumberAsWord(int input)
      case 17: return "Seventeen";
      case 18: return "Eighteen";
      case 19: return "Nineteen";
-     case 20: return "Tweenty";
+     case 20: return "Twenty";
      case 21: return "Twenty One";
      case 22: return "Twenty Two";
      case 23: return "Twenty Three";
