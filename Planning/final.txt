@@ -1,0 +1,25 @@
+import ddf.minim.*;
+
+AudioPlayer ap;
+Minim minim;
+
+
+  minim = new Minim(this);
+  ap = minim.loadFile("says.mp3", 2048);
+  ap.play();
+  ap.loop();
+
+
+
+void stop() 
+{
+  ap.close();
+  minim.stop();
+  super.stop();
+}
+
+
+ToDo:
+ - Collect points
+ - Store how well questions are attempted
+ - Generate an (informercial styled) image based on how the questions were answered and the leaderboard
