@@ -566,11 +566,11 @@ public class stateQuestionsToPlay extends State
     hadResponse = true;
     if (total == 0 && count == 0) hadResponse = false;
     
-<<<<<<< Updated upstream
+
     if (total == 0) total = 10;
-=======
+
     if (total == 0) total = 30;
->>>>>>> Stashed changes
+
     if (count == 0) count = 1;
   
     average = total / count; 
