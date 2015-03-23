@@ -40,7 +40,7 @@ void setup()
 {
   size(1920, 1080);
   
-  ard = new Arduino(this, Arduino.list()[2], 57600);
+  ard = new Arduino(this, Arduino.list()[1], 57600);
   ard.pinMode(servoPin, 4);
   ard.pinMode(buzzerPin, Arduino.OUTPUT);
 
@@ -75,10 +75,10 @@ void setup()
 
   minim = new Minim(this);
   ap = minim.loadFile("song.mp3", 2048);
-  ap.play();
-  ap.loop();
-  tts = new TTS();  
+  //ap.play();
+  //ap.loop();
   
+  tts = new TTS();    
   t = new TextThread("");
   t.start();
 
@@ -498,7 +498,7 @@ public class stateQuery extends State
     textY = 1200;
     randomCode = String.format("%04d", random.nextInt(9999));
     
-    say("How many questions do you want to play? Tweet using the hashtag g 1 q _ " + randomCode + " to indicate how many questions you would like to play.");
+    say("How many questions do you want to play? Tweet using the hashtag g 1 q _ " + randomCode.replace("", " ").trim() + " to indicate how many questions you would like to play.");
   }
 
   void onUpdate()
@@ -565,7 +565,7 @@ public class stateQuestion extends State
     case 2: saying += ", is it A: " + wrongAnswer[0] + ", is it B: " + wrongAnswer[1] + ", is it C: " + q.correctAnswer + ", or is it D: " + wrongAnswer[2] + "? "; break;
     case 3: saying += ", is it A: " + wrongAnswer[0] + ", is it B: " + wrongAnswer[1] + ", is it C: " + wrongAnswer[2] + ", or is it D: " + q.correctAnswer + "? "; break;
     }
-    saying += "Use the hashtag g 1 q _ " + randomCode + " to indicate your answer.";
+    saying += "Use the hashtag g 1 q _ " + randomCode.replace("", " ").trim() + " to indicate your answer.";
     say(saying);
   }
 
