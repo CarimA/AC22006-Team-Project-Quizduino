@@ -147,7 +147,8 @@ void popStack() // really, this should return something, but the functionality i
 
 void getTweets()
 {
-  tickServo(3000);
+  // CHANGE BACK LATER.
+  tickServo(20000);
   
   recentTweets.put("ignore", "ignore");
 
@@ -389,7 +390,7 @@ public class stateQuery extends State
   Tween textTween;
   float textY;
   
-  int timer = 2000;
+  int timer = 30000;
 
   void onSetup(PApplet window)
   {
@@ -429,7 +430,7 @@ public class stateQuery extends State
 public class stateQuestion extends State
 {
   boolean firstFrame;
-  int timer = 7000;
+  int timer = 20000;
    Question q;
    int qNo; 
    
@@ -456,7 +457,7 @@ public class stateQuestion extends State
   {    
     if (!recentTweets.isEmpty() && delayFrame)
     {
-        delay(5000);
+        tickServo(5000);
       // now, check if the questions are right, and display them.
       
       if (!questions.isLastQuestion())
@@ -634,7 +635,7 @@ public class stateQuestionsToPlay extends State
     if (total == 0 && count == 0) hadResponse = false;
     
 
-    if (total == 0) total = 2;
+    if (total == 0) total = 10; 
     if (count == 0) count = 1;
   
     average = total / count; 
@@ -682,7 +683,7 @@ class QuestionManager
     
   public void loadQuestions()
   {
-    String[] qs = loadStrings("temp.txt");
+    String[] qs = loadStrings("questions.txt");
     
     StringBuilder builder = new StringBuilder();
     for(String s : qs) {
@@ -697,7 +698,7 @@ class QuestionManager
   public void newGame(int x)
   {
      Collections.shuffle(questions.questions);
-    game = new LinkedList<Question>(questions.questions.subList(0, x)); 
+    game = new LinkedList<Question>(questions.questions.subList(0, Math.min(x, questions.questions.size()))); 
   }  
   
   public int getQuestionNo()
