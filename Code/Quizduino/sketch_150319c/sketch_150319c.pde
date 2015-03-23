@@ -40,9 +40,9 @@ void setup()
 {
   size(1920, 1080);
   
-  //ard = new Arduino(this, Arduino.list()[2], 57600);
-  //ard.pinMode(servoPin, 4);
-  //ard.pinMode(buzzerPin, Arduino.OUTPUT);
+  ard = new Arduino(this, Arduino.list()[2], 57600);
+  ard.pinMode(servoPin, 4);
+  ard.pinMode(buzzerPin, Arduino.OUTPUT);
 
   ConfigurationBuilder cb = new ConfigurationBuilder();
   cb.setOAuthConsumerKey("BkXp9P3M8KqpmQBpwtH4xaStG");
@@ -79,9 +79,8 @@ void setup()
   ap.loop();
   tts = new TTS();  
   
-  t = new TextThread();
-  t.trigger();
-
+  t = new TextThread("");
+  t.start();
 
   frameRate(120);
 }
@@ -190,6 +189,17 @@ void getTweets()
   {
     //println("twitter error" + tex);
   }
+}
+
+void say(String input)
+{
+   t.setSay(input);
+   thread("trigger");
+}
+
+void trigger()
+{
+ t.trigger(); 
 }
 
 String getNumberAsWord(int input)
@@ -402,6 +412,7 @@ public class stateLoading extends State
   void onUpdate()
   {
     if (firstFrame)     
+      say("Time is now up, Quizduino is now collecting responses. Any tweet sent after this time may not be collected.");
       getTweets();
   }
 
@@ -409,7 +420,8 @@ public class stateLoading extends State
   {
     fill(255);
     drawText("neoteric", "Time's up!", 120, 1920 / 2, 1080 / 2 - 100, CENTER, CENTER, true);
-    drawText("roboto", "Quizduino is now collecting responses, \r\nany tweet sent after this time may not be collected!", 60, 1920 / 2, 1080 / 2 + 100, CENTER, CENTER, true);   
+    drawText("roboto", "Quizduino is now collecting responses, \r\nany tweet sent after this time may not be collected!", 60, 1920 / 2, 1080 / 2 + 100, CENTER, CENTER, true);
+      
     firstFrame = true;
 
     if (!recentTweets.isEmpty())
@@ -485,6 +497,8 @@ public class stateQuery extends State
     textTween = new Tween(window, 1, Tween.SECONDS, Shaper.BEZIER);
     textY = 1200;
     randomCode = String.format("%04d", random.nextInt(9999));
+    
+    say("How many questions do you want to play? Tweet using the hashtag g 1 q _ " + randomCode + " to indicate how many questions you would like to play.");
   }
 
   void onUpdate()
@@ -502,7 +516,7 @@ public class stateQuery extends State
 
   void onDraw()
   {
-
+    
     drawText("neoteric", "HOW MANY QUESTIONS DO\r\nYOU WANT TO PLAY?", 120, 1920 / 2, textY - 150, CENTER, CENTER, false);
     drawText("roboto", "Respond with #g1q_" + randomCode + " <number of questions>\r\nOne question takes roughly one minute.", 60, 1920 / 2, textY + 150, CENTER, CENTER, false);
 
@@ -541,12 +555,25 @@ public class stateQuestion extends State
     ShuffleArray(wrongAnswer);
     delayFrame = false;
     firstFrame = false;
+    
+    String saying = "Question " + getNumberAsWord(qNo) + ": " + q.question;
+    
+    switch (index[0])
+    {
+    case 0: saying += ", is it A: " + q.correctAnswer + ", is it B: " + wrongAnswer[0] + ", is it C: " + wrongAnswer[1] + ", or is it D: " + wrongAnswer[2] + "? "; break;
+    case 1: saying += ", is it A: " + wrongAnswer[0] + ", is it B: " + q.correctAnswer + ", is it C: " + wrongAnswer[1] + ", or is it D: " + wrongAnswer[2] + "? "; break;
+    case 2: saying += ", is it A: " + wrongAnswer[0] + ", is it B: " + wrongAnswer[1] + ", is it C: " + q.correctAnswer + ", or is it D: " + wrongAnswer[2] + "? "; break;
+    case 3: saying += ", is it A: " + wrongAnswer[0] + ", is it B: " + wrongAnswer[1] + ", is it C: " + wrongAnswer[2] + ", or is it D: " + q.correctAnswer + "? "; break;
+    }
+    saying += "Use the hashtag g 1 q _ " + randomCode + " to indicate your answer.";
+    say(saying);
   }
 
   void onUpdate()
   {    
     if (delayFrame)
     {
+      say("The correct answer is " + q.correctAnswer);
       tickServo(5000);
       // now, check if the questions are right, and display them.
 
