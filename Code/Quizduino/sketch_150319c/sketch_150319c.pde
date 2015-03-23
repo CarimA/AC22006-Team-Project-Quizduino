@@ -36,7 +36,7 @@ void setup()
 {
   size(1920, 1080);
 
-  ard = new Arduino(this, Arduino.list()[2], 57600);
+  ard = new Arduino(this, Arduino.list()[0], 57600);
   ard.pinMode(servoPin, 4);
   ard.pinMode(buzzerPin, Arduino.OUTPUT);
 
@@ -492,35 +492,36 @@ public class stateQuestion extends State
     switch (index[0])
     {
       case 0: 
-        drawText("roboto", q.correctAnswer, 60, 160, 545, LEFT, TOP, true);
+        //drawText("roboto", q.correctAnswer, 60, 160, 545, LEFT, TOP, true);
+        drawText("roboto", q.correctAnswer, 60, 160, 575, LEFT, TOP, true);
         
-        drawText("roboto", wrongAnswer[0], 60, 1080, 545, LEFT, TOP, true);
-        drawText("roboto", wrongAnswer[1], 60, 160, 715, LEFT, TOP, true);
-        drawText("roboto", wrongAnswer[2], 60, 1080, 715, LEFT, TOP, true);
+        drawText("roboto", wrongAnswer[0], 60, 1080, 575, LEFT, TOP, true);
+        drawText("roboto", wrongAnswer[1], 60, 160, 745, LEFT, TOP, true);
+        drawText("roboto", wrongAnswer[2], 60, 1080, 745, LEFT, TOP, true);
         break;
         
       case 1:
-        drawText("roboto", q.correctAnswer, 60, 1080, 545, LEFT, TOP, true);
+        drawText("roboto", q.correctAnswer, 60, 1080, 575, LEFT, TOP, true);
         
-        drawText("roboto", wrongAnswer[0], 60, 160, 545, LEFT, TOP, true);
-        drawText("roboto", wrongAnswer[1], 60, 160, 715, LEFT, TOP, true);
-        drawText("roboto", wrongAnswer[2], 60, 1080, 715, LEFT, TOP, true);
+        drawText("roboto", wrongAnswer[0], 60, 160, 575, LEFT, TOP, true);
+        drawText("roboto", wrongAnswer[1], 60, 160, 745, LEFT, TOP, true);
+        drawText("roboto", wrongAnswer[2], 60, 1080, 745, LEFT, TOP, true);
         break;
       
       case 2:
-        drawText("roboto", q.correctAnswer, 60, 160, 715, LEFT, TOP, true);
+        drawText("roboto", q.correctAnswer, 60, 160, 745, LEFT, TOP, true);
         
-        drawText("roboto", wrongAnswer[0], 60, 160, 545, LEFT, TOP, true);
-        drawText("roboto", wrongAnswer[1], 60, 1080, 545, LEFT, TOP, true);
-        drawText("roboto", wrongAnswer[2], 60, 1080, 715, LEFT, TOP, true);
+        drawText("roboto", wrongAnswer[0], 60, 160, 575, LEFT, TOP, true);
+        drawText("roboto", wrongAnswer[1], 60, 1080, 575, LEFT, TOP, true);
+        drawText("roboto", wrongAnswer[2], 60, 1080, 745, LEFT, TOP, true);
         break;
       
       case 3:
-        drawText("roboto", q.correctAnswer, 60, 1080, 715, LEFT, TOP, true);
+        drawText("roboto", q.correctAnswer, 60, 1080, 745, LEFT, TOP, true);
         
-        drawText("roboto", wrongAnswer[0], 60, 160, 545, LEFT, TOP, true);
-        drawText("roboto", wrongAnswer[1], 60, 1080, 545, LEFT, TOP, true);
-        drawText("roboto", wrongAnswer[2], 60, 160, 715, LEFT, TOP, true);
+        drawText("roboto", wrongAnswer[0], 60, 160, 575, LEFT, TOP, true);
+        drawText("roboto", wrongAnswer[1], 60, 1080, 575, LEFT, TOP, true);
+        drawText("roboto", wrongAnswer[2], 60, 160, 745, LEFT, TOP, true);
         break;
     }
          
