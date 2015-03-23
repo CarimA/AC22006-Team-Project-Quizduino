@@ -226,6 +226,48 @@ String getNumberAsWord(int input)
      case 38: return "Thirty Eight";
      case 39: return "Thirty Nine";
      case 40: return "Forty";
+     case 41: return "Forty One";
+     case 42: return "Forty Two";
+     case 43: return "Forty Three";
+     case 44: return "Forty Four";
+     case 45: return "Forty Five";
+     case 46: return "Forty Six";
+     case 47: return "Forty Seven";
+     case 48: return "Forty Eight";
+     case 49: return "Forty Nine";
+     case 50: return "Fifty";
+     case 51: return "Fifty One";
+     case 52: return "Fifty Two";
+     case 53: return "Fifty Three";
+     case 54: return "Fifty Four";
+     case 55: return "Fifty Five";
+     case 56: return "Fifty Six";
+     case 57: return "Fifty Seven";
+     case 58: return "Fifty Eight";
+     case 59: return "Fifty Nine";
+     case 60: return "Sixty";
+     case 61: return "Sixty One";
+     case 62: return "Sixty Two";
+     case 63: return "Sixty Three";
+     case 64: return "Sixty Four";
+     case 65: return "Sixty Five";
+     case 66: return "Sixty Six";
+     case 67: return "Sixty Seven";
+     case 68: return "Sixty Eight";
+     case 69: return "Sixty Nine";
+     case 70: return "Seventy";
+     case 71: return "Seventy One";
+     case 72: return "Seventy Two";
+     case 73: return "Seventy Three";
+     case 74: return "Seventy Four";
+     case 75: return "Seventy Five";
+     case 76: return "Seventy Six";
+     case 77: return "Seventy Seven";
+     case 78: return "Seventy Eight";
+     case 79: return "Seventy Nine";
+     case 80: return "Eighty";
+     
+     
    }
    return "";
 }
