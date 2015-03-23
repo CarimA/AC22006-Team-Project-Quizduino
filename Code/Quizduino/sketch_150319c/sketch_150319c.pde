@@ -4,7 +4,6 @@ import java.util.*;
 import processing.serial.*;
 import cc.arduino.*;
 import ddf.minim.*;
-PImage logotopright;
 // state management
 public Stack<State> stateStack;
 
@@ -36,7 +35,7 @@ void setup()
 {
   size(1920, 1080);
 
-  ard = new Arduino(this, Arduino.list()[0], 57600);
+  ard = new Arduino(this, Arduino.list()[2], 57600);
   ard.pinMode(servoPin, 4);
   ard.pinMode(buzzerPin, Arduino.OUTPUT);
 
@@ -51,6 +50,7 @@ void setup()
   images = new HashMap<String, PImage>();
   images.put("background", loadImage("bg.png"));
   images.put("logo", loadImage("logo.png"));
+  images.put("logo-s", loadImage("logo_small.png"));
   
   images.put("label", loadImage("question_label.png"));
   images.put("label-correct", loadImage("question_correct.png"));
@@ -437,9 +437,7 @@ public class stateQuestion extends State
 
   void onDraw()
   {
-    
-    logotopright = loadImage("logotopright.png");
-    image(logotopright, 1500, 30);
+    drawImage("logo-s", 1500, 30);
     
     if (!recentTweets.isEmpty())
     {
@@ -497,35 +495,34 @@ public class stateQuestion extends State
     {
       case 0: 
         //drawText("roboto", q.correctAnswer, 60, 160, 545, LEFT, TOP, true);
-        drawText("roboto", q.correctAnswer, 60, 160, 575, LEFT, TOP, true);
-        
-        drawText("roboto", wrongAnswer[0], 60, 1080, 575, LEFT, TOP, true);
-        drawText("roboto", wrongAnswer[1], 60, 160, 745, LEFT, TOP, true);
-        drawText("roboto", wrongAnswer[2], 60, 1080, 745, LEFT, TOP, true);
+        drawQuestion(q.correctAnswer, 0);
+        drawQuestion(wrongAnswer[0], 1);
+        drawQuestion(wrongAnswer[1], 2);
+        drawQuestion(wrongAnswer[2], 3);
+                
         break;
         
       case 1:
-        drawText("roboto", q.correctAnswer, 60, 1080, 575, LEFT, TOP, true);
+        drawQuestion(q.correctAnswer, 1);
+        drawQuestion(wrongAnswer[0], 0);
+        drawQuestion(wrongAnswer[1], 2);
+        drawQuestion(wrongAnswer[2], 3);
         
-        drawText("roboto", wrongAnswer[0], 60, 160, 575, LEFT, TOP, true);
-        drawText("roboto", wrongAnswer[1], 60, 160, 745, LEFT, TOP, true);
-        drawText("roboto", wrongAnswer[2], 60, 1080, 745, LEFT, TOP, true);
         break;
       
       case 2:
-        drawText("roboto", q.correctAnswer, 60, 160, 745, LEFT, TOP, true);
+        drawQuestion(q.correctAnswer, 2);
+        drawQuestion(wrongAnswer[0], 0);
+        drawQuestion(wrongAnswer[1], 1);
+        drawQuestion(wrongAnswer[2], 3);
         
-        drawText("roboto", wrongAnswer[0], 60, 160, 575, LEFT, TOP, true);
-        drawText("roboto", wrongAnswer[1], 60, 1080, 575, LEFT, TOP, true);
-        drawText("roboto", wrongAnswer[2], 60, 1080, 745, LEFT, TOP, true);
         break;
       
       case 3:
-        drawText("roboto", q.correctAnswer, 60, 1080, 745, LEFT, TOP, true);
-        
-        drawText("roboto", wrongAnswer[0], 60, 160, 575, LEFT, TOP, true);
-        drawText("roboto", wrongAnswer[1], 60, 1080, 575, LEFT, TOP, true);
-        drawText("roboto", wrongAnswer[2], 60, 160, 745, LEFT, TOP, true);
+        drawQuestion(q.correctAnswer, 3);
+        drawQuestion(wrongAnswer[0], 0);
+        drawQuestion(wrongAnswer[1], 1);
+        drawQuestion(wrongAnswer[2], 2);
         break;
     }
          
@@ -540,6 +537,29 @@ public class stateQuestion extends State
   }
 }
 
+void drawQuestion(String text, int index)
+{
+  int x = 0, y = 0;
+  switch (index)
+   {
+     case 0: x = 160; y = 575; break;
+     case 1: x = 1080; y = 575; break;
+     case 2: x = 160; y = 745; break;
+     case 3: x = 1080; y = 745; break; 
+   }
+   
+    if (text.contains("\n"))
+    {
+      // smaller size + newline
+      drawText("roboto", text, 30, x, y, LEFT, TOP, true);
+    }
+    else
+    {
+     // normal size. 
+       drawText("roboto", text, 60, x, y, LEFT, TOP, true);
+    }
+     
+}
 
 public class stateQuestionsToPlay extends State 
 {   
@@ -572,10 +592,7 @@ public class stateQuestionsToPlay extends State
     if (total == 0 && count == 0) hadResponse = false;
     
 
-    if (total == 0) total = 10;
-
-    if (total == 0) total = 30;
-
+    if (total == 0) total = 2;
     if (count == 0) count = 1;
   
     average = total / count; 
@@ -623,7 +640,7 @@ class QuestionManager
     
   public void loadQuestions()
   {
-    String[] qs = loadStrings("questions.txt");
+    String[] qs = loadStrings("temp.txt");
     
     StringBuilder builder = new StringBuilder();
     for(String s : qs) {

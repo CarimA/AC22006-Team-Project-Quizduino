@@ -86,7 +86,7 @@
 		"wrongAnswers": "With 3D glasses\r\nWith a tiger\r\nWith a martial arts master"
 	  },
 	  {
-		"question": "With what colour flame does sodium burn when heated\r\nin the flame of a Bunsen burner?",
+		"question": "With what colour flame does sodium burn when heated\r\nin the flame of\na Bunsen burner?",
 		"correctAnswer": "Yellow",
 		"wrongAnswers": "Violet\r\nRed\r\nGreen"
 	  },
@@ -233,7 +233,7 @@
   {
     "question": "What does the television acronym HDMI stand for?",
     "correctAnswer": "High Definition Multimedia Interface",
-    "wrongAnswers": "High Definition Multi Incorporated\r\nHigh Definition Music Interferance\r\nHigh Definition Multiple Integration\r\n"
+    "wrongAnswers": "High Definition\nMulti Incorporated\r\nHigh Definition\nMusic Interferance\r\nHigh Definition\nMultiple Integration\r\n"
   },
   {
     "question": "Herpetology is the study of what?",
