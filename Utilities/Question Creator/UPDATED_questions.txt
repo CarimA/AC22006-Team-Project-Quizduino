@@ -1,0 +1,372 @@
+[
+  {
+    "question": "Who won the UEFA European Championship of 2000?",
+    "correctAnswer": "France",
+    "wrongAnswers": "Italy\r\nPortugal\r\nSpain"
+  },
+  {
+    "question": "What word means zero when calling the score in tennis?",
+    "correctAnswer": "Love",
+    "wrongAnswers": "Dove\r\nNothing\r\nHug"
+  },
+  {
+    "question": "What sport doesn't have a goalie position?",
+    "correctAnswer": "Basketball",
+    "wrongAnswers": "Ice Hockey\r\nSoccer\r\nLacrosse"
+  },
+  {
+    "question": "What is the center of an atom called?",
+    "correctAnswer": "Nucleus",
+    "wrongAnswers": "DNA\r\nMolecule\r\nCell"
+  },
+  {
+    "question": "What is the unit of measure for sound?",
+    "correctAnswer": "Decibels",
+    "wrongAnswers": "Photons\r\nAudibles\r\nElectrons"
+  },
+  {
+    "question": "Which element is Ra in the periodic table?",
+    "correctAnswer": "Radium",
+    "wrongAnswers": "Rubidium\r\nRadio\r\nRhodium"
+  },
+  {
+    "question": "What is the charge of a proton?",
+    "correctAnswer": "+1",
+    "wrongAnswers": "-1\r\n0\r\n+2"
+  },
+  {
+    "question": "Where is the Nile river?",
+    "correctAnswer": "Africa",
+    "wrongAnswers": "America\r\nEurope\r\nAsia"
+  },
+  {
+    "question": "Which city is not in Germany?",
+    "correctAnswer": "Bern",
+    "wrongAnswers": "Duesseldorf\r\nMunich\r\nFreiburg"
+  },
+  {
+    "question": "Who is on the hundred dollar bill?",
+    "correctAnswer": "Benjamin Franklin",
+    "wrongAnswers": "Thomas Jefferson\r\nGeorge Washington\r\nRobert E Lee"
+  },
+  {
+    "question": "What inspired Walt Disney to make Disney?",
+    "correctAnswer": "A Mouse",
+    "wrongAnswers": "A Bird\r\nA Dog\r\nA Rat"
+  },
+  {
+    "question": "What culture thought of cats as gods?",
+    "correctAnswer": "Egyptians",
+    "wrongAnswers": "Germans\r\nSaudi Arabians\r\nFrench"
+  },
+  {
+    "question": "Who fought Medusa?",
+    "correctAnswer": "Perseus",
+    "wrongAnswers": "Theseus\r\nAchilles\r\nHercules"
+  },
+  {
+    "question": "What is the largest art museum in the world?",
+    "correctAnswer": "The Louvre",
+    "wrongAnswers": "New York Museum Of Art\r\nMusee D?orsay\r\nThe National Gallery"
+  },
+  {
+    "question": "Which of these is a Brazilian Painter?",
+    "correctAnswer": "Romero Britto",
+    "wrongAnswers": "Picasso\r\nMichaelangelo\r\nLeonardo Da Vinci"
+  },
+  {
+    "question": "What is one of the noble gases?",
+    "correctAnswer": "Helium (He)",
+    "wrongAnswers": "Chlorine (Cl)\r\nLithium (Li)\r\nCarbon (C)"
+  },
+  {
+    "question": "With what is training Lara Croft in the opening scene of ?Tomb Raider??",
+    "correctAnswer": "With a robot",
+    "wrongAnswers": "With 3D glasses\r\nWith a tiger\r\nWith a martial arts master"
+  },
+  {
+    "question": "With what colour flame does sodium burn when heated in the flame of a Bunsen burner?",
+    "correctAnswer": "Yellow",
+    "wrongAnswers": "Violet\r\nRed\r\nRed"
+  },
+  {
+    "question": "Which island is in Africa?",
+    "correctAnswer": "Madagascar",
+    "wrongAnswers": "Tortuga\r\nIsle of Man\r\nCyprus"
+  },
+  {
+    "question": "Why do crocodiles leave their mouth open for a long time?",
+    "correctAnswer": "To stay warm",
+    "wrongAnswers": "To drink water\r\nTo digest food\r\nTo wait for an animal to drop in"
+  },
+  {
+    "question": "Why is The Dead Sea called that way?",
+    "correctAnswer": "Because nothing can live in it",
+    "wrongAnswers": "It rhymes with The Red Sea\r\nBodies are buried at the bottom\r\nBecause of a historical war"
+  },
+  {
+    "question": "Whose quote is ?Fly like a butterfly sting like a bee??",
+    "correctAnswer": "Muhammad Ali",
+    "wrongAnswers": "Usain Bolt\r\nTyson Gay\r\nAdolf Hitler"
+  },
+  {
+    "question": "Who's the writer of ?Game of Thrones??",
+    "correctAnswer": "George R.R. Martin",
+    "wrongAnswers": "J.K. Rowling\r\nCamila Lackberg\r\nKen Follett"
+  },
+  {
+    "question": "Who's the father of modern electromagnetism?",
+    "correctAnswer": "Maxwell",
+    "wrongAnswers": "Faraday\r\nHelmoltz\r\nVolta"
+  },
+  {
+    "question": "Who's the author of ?The Picture of Dorian Gray??",
+    "correctAnswer": "Oscar Wilde",
+    "wrongAnswers": "Arthur Conan Doyle\r\nGeorge Orwell\r\nCharles Dickens"
+  },
+  {
+    "question": "Who's the author of ?Moby Dick??",
+    "correctAnswer": "Herman Melville",
+    "wrongAnswers": "Ralph Waldo Emerson\r\nHenry James\r\nHenry David Thoreau"
+  },
+  {
+    "question": "Who's the artist of the famous painting ?The Sunflowers??",
+    "correctAnswer": "Van Gogh",
+    "wrongAnswers": "Monet\r\nRembrandt\r\nGoya"
+  },
+  {
+    "question": "The Half Life symbol is what Greek letter?",
+    "correctAnswer": "Lambda",
+    "wrongAnswers": "Omicron\r\nSigma\r\nOmega"
+  },
+  {
+    "question": "Which of these is not one of Rockstar Games' hits, but is actually a puzzle-platformer developed by Valve?",
+    "correctAnswer": "Portal",
+    "wrongAnswers": "L.A. Noire\r\nRed Dead Redemption\r\nGrand Theft Auto V"
+  },
+  {
+    "question": "What fruit is most commonly used to make wine?",
+    "correctAnswer": "Grape",
+    "wrongAnswers": "Strawberries\r\nApples\r\nPears"
+  },
+  {
+    "question": "How many wings does a bee have?",
+    "correctAnswer": "4",
+    "wrongAnswers": "2\r\n6\r\n8"
+  },
+  {
+    "question": "What is irregular about the Manx cat?",
+    "correctAnswer": "No tail",
+    "wrongAnswers": "No fur\r\nNo pointy ears\r\nClear irises"
+  },
+  {
+    "question": "The siege of which city is described in Homer's Iliad?",
+    "correctAnswer": "Troy",
+    "wrongAnswers": "Crete\r\nAthens\r\nIthaca"
+  },
+  {
+    "question": "How long does it take light from the Sun to reach the Earth?",
+    "correctAnswer": "8 minutes 20 seconds",
+    "wrongAnswers": "5 minues 40 seconds\r\n2 minutes 20 seconds\r\n10 minutes 10 seconds"
+  },
+  {
+    "question": "What Country was first to be able to buy the CD?",
+    "correctAnswer": "Japan",
+    "wrongAnswers": "China\r\nUSA\r\nGermany"
+  },
+  {
+    "question": "In 'Peter Pan' how did Captain Hook lose his hand?",
+    "correctAnswer": "Bitten off by a crocodile",
+    "wrongAnswers": "Cut off because of disease\r\nSmashed by a rock\r\nHe ate is himself"
+  },
+  {
+    "question": "How many squares make up a standard 'Snakes & Ladders' board?",
+    "correctAnswer": "100",
+    "wrongAnswers": "50\r\n80\r\n60"
+  },
+  {
+    "question": "Ailurophobia is a fear of what?",
+    "correctAnswer": "Cats",
+    "wrongAnswers": "Dogs\r\nHorses\r\nBirds"
+  },
+  {
+    "question": "Pediophobia is a fear of what?",
+    "correctAnswer": "Dolls",
+    "wrongAnswers": "Kids\r\nThe Pope\r\nReptiles"
+  },
+  {
+    "question": "'The Stand' is a book written by which author?",
+    "correctAnswer": "Stephen King",
+    "wrongAnswers": "Dean Koontz\r\nRichard Laymon\r\nRay Bradbury"
+  },
+  {
+    "question": "'Watchers' is a book written by which author?",
+    "correctAnswer": "Dean Koontz",
+    "wrongAnswers": "Agatha Christie\r\nDan Brown\r\nNeil Gaiman"
+  },
+  {
+    "question": "Which cartoon TV characters catchphrase is \"D'oh!\"?",
+    "correctAnswer": "Homer Simpson",
+    "wrongAnswers": "Peter Griffin\r\nHank Hill\r\nArcher\r\n"
+  },
+  {
+    "question": "Pele was a famous footballer who was born in which country?",
+    "correctAnswer": "Brazil",
+    "wrongAnswers": "Argentina\r\nColumbia\r\nChile"
+  },
+  {
+    "question": "George Best was a famous footballer who was born in which country? ",
+    "correctAnswer": "Northern Ireland",
+    "wrongAnswers": "Scotland\r\nEngland\r\nWales"
+  },
+  {
+    "question": "What is a male swan known as?",
+    "correctAnswer": "Cob",
+    "wrongAnswers": "Bob\r\nFob\r\nLob"
+  },
+  {
+    "question": "How many years did Nelson Mandela spend in prison?",
+    "correctAnswer": "27",
+    "wrongAnswers": "17\r\n7\r\n37"
+  },
+  {
+    "question": "What does the television acronym HDMI stand for?",
+    "correctAnswer": "High Definition Multimedia Interface",
+    "wrongAnswers": "High Definition Multi Incorporated\r\nHigh Definition Music Interferance\r\nHigh Definition Multiple Integration\r\n"
+  },
+  {
+    "question": "Herpetology is the study of what?",
+    "correctAnswer": "Reptiles",
+    "wrongAnswers": "Amphibians\r\nBirds\r\nTrees"
+  },
+  {
+    "question": "An 'Oryx' is what kind of animal?",
+    "correctAnswer": "Antelope",
+    "wrongAnswers": "Crocodile\r\nLeopard\r\nGiraffe"
+  },
+  {
+    "question": "A 'mazard' is a type of which fruit?",
+    "correctAnswer": "Cherry",
+    "wrongAnswers": "Pineapple\r\nMango\r\nStrawberry\r\n"
+  },
+  {
+    "question": "What colour is an amethyst?",
+    "correctAnswer": "Purple",
+    "wrongAnswers": "Amber\r\nturquoise\r\nGold\r\n"
+  },
+  {
+    "question": "Budgerigars are native to which country?",
+    "correctAnswer": "Australia",
+    "wrongAnswers": "New Zealand\r\nThailand\r\nArgentina"
+  },
+  {
+    "question": "What year did Fidel Castro become president of Cuba?",
+    "correctAnswer": "1976",
+    "wrongAnswers": "1970\r\n1972\r\n1978"
+  },
+  {
+    "question": "In what year was Elvis Presley born?",
+    "correctAnswer": "1935",
+    "wrongAnswers": "1933\r\n1930\r\n1940"
+  },
+  {
+    "question": "What year was the piano invented",
+    "correctAnswer": "1709",
+    "wrongAnswers": "1609\r\n1509\r\n1809"
+  },
+  {
+    "question": "Which animal, when born, averages between 6 to 8 metres long?",
+    "correctAnswer": "Blue Whale",
+    "wrongAnswers": "African Rhino\r\nHippopotomaus\r\nAnaconda\r\n"
+  },
+  {
+    "question": "In which country, during World War 2, was 'The Battle of El Alamein' fought?",
+    "correctAnswer": "Egypt",
+    "wrongAnswers": "Cyprus\r\nGreece\r\nTurkey"
+  },
+  {
+    "question": "In which country would you find the city of 'Ghent'?",
+    "correctAnswer": "Belgium",
+    "wrongAnswers": "Holland\r\nGermany\r\nPoland"
+  },
+  {
+    "question": "'The Wall Street Crash' happened in which year?",
+    "correctAnswer": "1929",
+    "wrongAnswers": "1939\r\n1919\r\n1949"
+  },
+  {
+    "question": "Where would you find a grasshoppers ears?",
+    "correctAnswer": "On it's legs",
+    "wrongAnswers": "On it's forehead\r\nOn it's back\r\nOn it's stomach"
+  },
+  {
+    "question": "Where in Britain would you find the River Medina?",
+    "correctAnswer": "Isle of Wight",
+    "wrongAnswers": "Isle of Man\r\nNorthern Ireland\r\nWales"
+  },
+  {
+    "question": "What is the piece of wood called that is the traditional centrepiece of a fire in the hearth at Christmas?",
+    "correctAnswer": "Yule Log",
+    "wrongAnswers": "Yale Log\r\nBule Log\r\nFool Log"
+  },
+  {
+    "question": "Which English football team play at Kingston Communications Stadium?",
+    "correctAnswer": "Hull City",
+    "wrongAnswers": "Birmingham City\r\nStoke City\r\nManchester City"
+  },
+  {
+    "question": "In what event did eight London policemen win gold medals in the 1908 Olympics?",
+    "correctAnswer": "Tug of War",
+    "wrongAnswers": "Discus\r\nHammer Throw\r\nHigh Jump\r\n"
+  },
+  {
+    "question": "Which group had a top ten hit in 1981 with Romeo And Juliet?",
+    "correctAnswer": "Dire Straits",
+    "wrongAnswers": "U2\r\nDeacon Blue\r\nMadness"
+  },
+  {
+    "question": "What did Bruce Willis use to destroy an aeroplane in Diehard 2?",
+    "correctAnswer": "Cigarette lighter",
+    "wrongAnswers": "His fists\r\nMobile phone\r\nCutlery"
+  },
+  {
+    "question": " What unusual accident led to the injuries which caused Portuguese dictator Salazar's death?",
+    "correctAnswer": "His deck chair collapsed",
+    "wrongAnswers": "He was burned while cooking eggs\r\nTripped over tied shoelaces\r\nSuffered shock after a balloon popped"
+  },
+  {
+    "question": "Which fairground attraction was first patented by Edwin Prescott in 1898?",
+    "correctAnswer": "Roller coaster",
+    "wrongAnswers": "Haunted house\r\nStrongman hammer & bell\r\nSpinning teacups"
+  },
+  {
+    "question": "What was Cliff Richard's backing group called before they became The Shadows?",
+    "correctAnswer": "Drifters",
+    "wrongAnswers": "Sifters\r\nWifters\r\nLifters"
+  },
+  {
+    "question": "A negus is a hot drink made from lemon juice and what alcoholic ingredient?",
+    "correctAnswer": "Port",
+    "wrongAnswers": "Gin\r\nBrandy\r\nWhiskey"
+  },
+  {
+    "question": "How many films did Laurel and Hardy make?",
+    "correctAnswer": "117",
+    "wrongAnswers": "100\r\n124\r\n250"
+  },
+  {
+    "question": "How many holes are there in a ten pin bowling ball?",
+    "correctAnswer": "Three",
+    "wrongAnswers": "Two\r\nFive\r\nFour"
+  },
+  {
+    "question": "What is the only mammal with four knees?",
+    "correctAnswer": "Elephant",
+    "wrongAnswers": "Dog\r\nCheetah\r\nRhino"
+  },
+  {
+    "question": "In The Wizard of Oz what is the name of Dorothy's dog?",
+    "correctAnswer": "Toto",
+    "wrongAnswers": "Lolo\r\nTito\r\nLato"
+  }
+]
