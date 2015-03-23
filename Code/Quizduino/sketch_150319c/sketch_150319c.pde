@@ -314,8 +314,6 @@ public class stateLoading extends State
     if (firstFrame)     
       getTweets();
     
-    if (!recentTweets.isEmpty())
-      popStack();
   }
   
   void onDraw()
@@ -324,6 +322,9 @@ public class stateLoading extends State
     drawText("neoteric", "Time's up!", 120, 1920 / 2, 1080 / 2 - 100, CENTER, CENTER, true);
     drawText("roboto", "Quizduino is now collecting responses, \r\nany tweet sent after this time may not be collected!", 60, 1920 / 2, 1080 / 2 + 100, CENTER, CENTER, true);   
     firstFrame = true;
+        
+    if (!recentTweets.isEmpty())
+      popStack();
   }
   
   void onEnd()
@@ -608,37 +609,48 @@ public class stateQuestionsToPlay extends State
   int average;
     boolean firstFrame;
   
+ int count;
+ int total;
+ 
   void onSetup(PApplet window)
-  {
-    int count = 0;
-    int total = 0;
-    
-    for (String value : recentTweets.values ())
-    {
-      println(value);
-      try {
-        int temp = Integer.parseInt(value);
-        if (temp <= 0) throw new Exception();
-        if (temp > 30) throw new Exception();
-        
-        total += temp;
-        count++;
-      }
-      catch (Exception ex) { }
-    }
-     
-    if (total == 0) total = 10; 
-    if (count == 0) count = 1;
-  
-    average = total / count; 
+  {    
+      println("entered onSetup()");
+   count = 0;
+   total = 0;
     
     firstFrame = false;
   }
 
   void onUpdate()
   {
+    println("entered onUpdate()");
+    if (!firstFrame)
+    {
+      println("entered !firstFrame");
+      for (String value : recentTweets.values ())
+      {
+        println(value);
+        try { 
+          int temp = Integer.parseInt(value);
+          if (temp <= 0) throw new Exception();
+          if (temp > 30) throw new Exception();
+          
+          total += temp;
+          count++;
+        }
+        catch (Exception ex) { }
+      }
+       
+      if (total == 0) total = 10; 
+      if (count == 0) count = 1;
+    
+      average = total / count; 
+        
+    }
+    
     if (firstFrame)
     {
+      println("entered firstFrame");
       questions.newGame(average);
         delay(5000);
        pushStack(new stateQuestion());      
@@ -647,6 +659,7 @@ public class stateQuestionsToPlay extends State
 
   void onDraw()
   {    
+      println("entered onDraw()");
     drawText("roboto", "We are playing", 60, 1920 / 2, 1080 / 2 - 330, CENTER, CENTER, false);
     drawText("lobster", average + "", 600, 1920 / 2, 1080 / 2, CENTER, CENTER, true);
     drawText("roboto", "questions", 60, 1920 / 2, 1080 / 2 + 270, CENTER, CENTER, false);
