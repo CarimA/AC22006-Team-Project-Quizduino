@@ -81,12 +81,12 @@
 		"wrongAnswers": "Chlorine (Cl)\r\nLithium (Li)\r\nCarbon (C)"
 	  },
 	  {
-		"question": "With what is training Lara Croft in the opening scene of ‘Tomb Raider’?",
+		"question": "What is Lara Croft training with\r\nin the opening scene of ‘Tomb Raider’?",
 		"correctAnswer": "With a robot",
 		"wrongAnswers": "With 3D glasses\r\nWith a tiger\r\nWith a martial arts master"
 	  },
 	  {
-		"question": "With what colour flame does sodium burn when heated\r\nin the flame of\na Bunsen burner?",
+		"question": "With what colour flame does sodium burn when heated\r\nin the flame of a Bunsen burner?",
 		"correctAnswer": "Yellow",
 		"wrongAnswers": "Violet\r\nRed\r\nGreen"
 	  },
@@ -176,11 +176,6 @@
 		"wrongAnswers": "China\r\nUSA\r\nGermany"
 	  },
 	  {
-		"question": "In 'Peter Pan' how did Captain Hook lose his hand?",
-		"correctAnswer": "Bitten off by a crocodile",
-		"wrongAnswers": "Cut off because of disease\r\nSmashed by a rock\r\nHe ate is himself"
-	  },
-	  {
 		"question": "How many squares make up a standard 'Snakes & Ladders' board?",
 		"correctAnswer": "100",
 		"wrongAnswers": "50\r\n80\r\n60"
@@ -232,7 +227,7 @@
   },
   {
     "question": "What does the television acronym HDMI stand for?",
-    "correctAnswer": "High Definition Multimedia Interface",
+    "correctAnswer": "High Definition\rMultimedia Interface",
     "wrongAnswers": "High Definition\nMulti Incorporated\r\nHigh Definition\nMusic Interferance\r\nHigh Definition\nMultiple Integration\r\n"
   },
   {
@@ -253,7 +248,7 @@
   {
     "question": "What colour is an amethyst?",
     "correctAnswer": "Purple",
-    "wrongAnswers": "Amber\r\nturquoise\r\nGold\r\n"
+    "wrongAnswers": "Amber\r\nTurquoise\r\nGold\r\n"
   },
   {
     "question": "Budgerigars are native to which country?",
@@ -271,7 +266,7 @@
     "wrongAnswers": "1933\r\n1930\r\n1940"
   },
   {
-    "question": "What year was the piano invented",
+    "question": "What year was the piano invented?",
     "correctAnswer": "1709",
     "wrongAnswers": "1609\r\n1509\r\n1809"
   },
@@ -281,7 +276,7 @@
     "wrongAnswers": "African Rhino\r\nHippopotomaus\r\nAnaconda\r\n"
   },
   {
-    "question": "In which country, during World War 2, was 'The Battle of El Alamein' fought?",
+    "question": "In which country, during World War 2,\r\nwas 'The Battle of El Alamein' fought?",
     "correctAnswer": "Egypt",
     "wrongAnswers": "Cyprus\r\nGreece\r\nTurkey"
   },
@@ -297,8 +292,8 @@
   },
   {
     "question": "Where would you find a grasshoppers ears?",
-    "correctAnswer": "On it's legs",
-    "wrongAnswers": "On it's forehead\r\nOn it's back\r\nOn it's stomach"
+    "correctAnswer": "On its legs",
+    "wrongAnswers": "On its forehead\r\nOn its back\r\nOn its stomach"
   },
   {
     "question": "Where in Britain would you find the River Medina?",
@@ -306,17 +301,17 @@
     "wrongAnswers": "Isle of Man\r\nNorthern Ireland\r\nWales"
   },
   {
-    "question": "What is the piece of wood called that is the traditional centrepiece of a fire in the hearth at Christmas?",
+    "question": "What is the piece of wood called that is the traditional\r\ncentrepiece of a fire in the hearth at Christmas?",
     "correctAnswer": "Yule Log",
     "wrongAnswers": "Yale Log\r\nBule Log\r\nFool Log"
   },
   {
-    "question": "Which English football team play at Kingston Communications Stadium?",
+    "question": "Which English football team play\r\nat Kingston Communications Stadium?",
     "correctAnswer": "Hull City",
     "wrongAnswers": "Birmingham City\r\nStoke City\r\nManchester City"
   },
   {
-    "question": "In what event did eight London policemen win gold medals in the 1908 Olympics?",
+    "question": "In what event did eight London policemen\r\nwin gold medals in the 1908 Olympics?",
     "correctAnswer": "Tug of War",
     "wrongAnswers": "Discus\r\nHammer Throw\r\nHigh Jump\r\n"
   },
@@ -326,27 +321,27 @@
     "wrongAnswers": "U2\r\nDeacon Blue\r\nMadness"
   },
   {
-    "question": "What did Bruce Willis use to destroy an aeroplane in Diehard 2?",
+    "question": "What did Bruce Willis use to\r\ndestroy an aeroplane in Die Hard 2?",
     "correctAnswer": "Cigarette lighter",
     "wrongAnswers": "His fists\r\nMobile phone\r\nCutlery"
   },
   {
-    "question": " What unusual accident led to the injuries which caused Portuguese dictator Salazar's death?",
-    "correctAnswer": "His deck chair collapsed",
-    "wrongAnswers": "He was burned while cooking eggs\r\nTripped over tied shoelaces\r\nSuffered shock after a balloon popped"
+    "question": " What unusual accident led to the injuries which\r\ncaused Portuguese dictator Salazar's death?",
+    "correctAnswer": "His deck\rchair collapsed",
+    "wrongAnswers": "He was burned\rwhile cooking eggs\r\nTripped over\rtied shoelaces\r\nSuffered shock\rafter a balloon popped"
   },
   {
-    "question": "Which fairground attraction was first patented by Edwin Prescott in 1898?",
+    "question": "Which fairground attraction was first\r\npatented by Edwin Prescott in 1898?",
     "correctAnswer": "Roller coaster",
     "wrongAnswers": "Haunted house\r\nStrongman hammer & bell\r\nSpinning teacups"
   },
   {
-    "question": "What was Cliff Richard's backing group called before they became The Shadows?",
+    "question": "What was Cliff Richard's backing group\r\ncalled before they became The Shadows?",
     "correctAnswer": "Drifters",
     "wrongAnswers": "Sifters\r\nWifters\r\nLifters"
   },
   {
-    "question": "A negus is a hot drink made from lemon juice and what alcoholic ingredient?",
+    "question": "A negus is a hot drink made from lemon\r\njuice and what alcoholic ingredient?",
     "correctAnswer": "Port",
     "wrongAnswers": "Gin\r\nBrandy\r\nWhiskey"
   },
