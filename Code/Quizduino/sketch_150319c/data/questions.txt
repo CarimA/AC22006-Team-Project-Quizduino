@@ -1,4 +1,4 @@
-﻿{
+{
 	"questions": [
 	{
 		"question": "Who won the UEFA European Championship of 2000?",
@@ -327,8 +327,8 @@
   },
   {
     "question": " What unusual accident led to the injuries which\r\ncaused Portuguese dictator Salazar's death?",
-    "correctAnswer": "His deck\rchair collapsed",
-    "wrongAnswers": "He was burned\rwhile cooking eggs\r\nTripped over\rtied shoelaces\r\nSuffered shock\rafter a balloon popped"
+    "correctAnswer": "His deck\nchair collapsed",
+    "wrongAnswers": "He was burned\nwhile cooking eggs\r\nTripped over\ntied shoelaces\r\nSuffered shock\nafter a balloon popped"
   },
   {
     "question": "Which fairground attraction was first\r\npatented by Edwin Prescott in 1898?",
