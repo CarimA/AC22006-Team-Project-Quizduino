@@ -147,7 +147,6 @@ void popStack() // really, this should return something, but the functionality i
 
 void getTweets()
 {
-  // CHANGE BACK LATER.
   tickServo(20000);
   
   recentTweets.put("ignore", "ignore");
@@ -173,7 +172,7 @@ void getTweets()
       {
         //println("error" + ex);
       }
-      //println("@" + status.getUser().getScreenName() + ":" + status.getText() + " [created at " + status.getCreatedAt() + "]");
+      println("@" + status.getUser().getScreenName() + ":" + status.getText() + " [created at " + status.getCreatedAt() + "]");
     }
   }
   catch (TwitterException tex)
@@ -607,7 +606,6 @@ void drawQuestion(String text, int index)
 public class stateQuestionsToPlay extends State 
 {   
   int average;
-  boolean hadResponse;
     boolean firstFrame;
   
   void onSetup(PApplet window)
@@ -626,15 +624,9 @@ public class stateQuestionsToPlay extends State
         total += temp;
         count++;
       }
-      catch (Exception ex)
-      {
-      }
+      catch (Exception ex) { }
     }
      
-    hadResponse = true;
-    if (total == 0 && count == 0) hadResponse = false;
-    
-
     if (total == 0) total = 10; 
     if (count == 0) count = 1;
   
@@ -698,7 +690,7 @@ class QuestionManager
   public void newGame(int x)
   {
      Collections.shuffle(questions.questions);
-    game = new LinkedList<Question>(questions.questions.subList(0, Math.min(x, questions.questions.size()))); 
+    game = new LinkedList<Question>(questions.questions.subList(0, x)); 
   }  
   
   public int getQuestionNo()
