@@ -4,7 +4,7 @@ import java.util.*;
 import processing.serial.*;
 import cc.arduino.*;
 import ddf.minim.*;
-
+PImage logotopright;
 // state management
 public Stack<State> stateStack;
 
@@ -437,6 +437,10 @@ public class stateQuestion extends State
 
   void onDraw()
   {
+    
+    logotopright = loadImage("logotopright.png");
+    image(logotopright, 1500, 30);
+    
     if (!recentTweets.isEmpty())
     {
       switch (index[0])
