@@ -1,4 +1,4 @@
-{
+﻿{
 	"questions": [
 	{
 		"question": "Who won the UEFA European Championship of 2000?",
@@ -227,7 +227,7 @@
   },
   {
     "question": "What does the television acronym HDMI stand for?",
-    "correctAnswer": "High Definition\rMultimedia Interface",
+    "correctAnswer": "High Definition\nMultimedia Interface",
     "wrongAnswers": "High Definition\nMulti Incorporated\r\nHigh Definition\nMusic Interferance\r\nHigh Definition\nMultiple Integration\r\n"
   },
   {

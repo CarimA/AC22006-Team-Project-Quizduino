@@ -25,6 +25,7 @@ HashMap<String, PFont> fonts;
 
 // question management
 QuestionManager questions;
+List<Attempts> attempts;
 
 // audio management
 ddf.minim.AudioPlayer ap;
@@ -39,8 +40,8 @@ String randomCode;
 void setup()
 {
   size(1920, 1080);
-  
-  ard = new Arduino(this, Arduino.list()[1], 57600);
+
+  ard = new Arduino(this, Arduino.list()[2], 57600);
   ard.pinMode(servoPin, 4);
   ard.pinMode(buzzerPin, Arduino.OUTPUT);
 
@@ -77,7 +78,7 @@ void setup()
   ap = minim.loadFile("song.mp3", 2048);
   //ap.play();
   //ap.loop();
-  
+
   tts = new TTS();    
   t = new TextThread("");
   t.start();
@@ -161,8 +162,9 @@ void getTweets()
 
   recentTweets.put("ignore", "ignore");
 
-  Query query = new Query("#g1q_" + randomCode);
+  Query query = new Query("#g1q" + randomCode);
   query.setCount(50);
+  query.setResultType(Query.ResultType.recent);
   try
   {
     QueryResult result = twitter.search(query);
@@ -172,7 +174,7 @@ void getTweets()
       {
         String temp = status.getText();
         temp = temp.toLowerCase();
-        temp = temp.replace("#g1q_" + randomCode, "");
+        temp = temp.replace("#g1q" + randomCode, "");
         temp = temp.replace("@quizduino", "");
         temp = temp.trim();
 
@@ -193,13 +195,13 @@ void getTweets()
 
 void say(String input)
 {
-   t.setSay(input);
-   thread("trigger");
+  t.setSay(input);
+  thread("trigger");
 }
 
 void trigger()
 {
- t.trigger(); 
+  t.trigger();
 }
 
 String getNumberAsWord(int input)
@@ -413,7 +415,7 @@ public class stateLoading extends State
   {
     if (firstFrame)     
       say("Time is now up, Quizduino is now collecting responses. Any tweet sent after this time may not be collected.");
-      getTweets();
+    getTweets();
   }
 
   void onDraw()
@@ -421,7 +423,7 @@ public class stateLoading extends State
     fill(255);
     drawText("neoteric", "Time's up!", 120, 1920 / 2, 1080 / 2 - 100, CENTER, CENTER, true);
     drawText("roboto", "Quizduino is now collecting responses, \r\nany tweet sent after this time may not be collected!", 60, 1920 / 2, 1080 / 2 + 100, CENTER, CENTER, true);
-      
+
     firstFrame = true;
 
     if (!recentTweets.isEmpty())
@@ -497,8 +499,8 @@ public class stateQuery extends State
     textTween = new Tween(window, 1, Tween.SECONDS, Shaper.BEZIER);
     textY = 1200;
     randomCode = String.format("%04d", random.nextInt(9999));
-    
-    say("How many questions do you want to play? Tweet using the hashtag g 1 q _ " + randomCode.replace("", " ").trim() + " to indicate how many questions you would like to play.");
+
+    say("How many questions do you want to play? Tweet using the hashtag g 1 q " + randomCode.replace("", " ").trim() + " to indicate how many questions you would like to play.");
   }
 
   void onUpdate()
@@ -516,9 +518,9 @@ public class stateQuery extends State
 
   void onDraw()
   {
-    
+
     drawText("neoteric", "HOW MANY QUESTIONS DO\r\nYOU WANT TO PLAY?", 120, 1920 / 2, textY - 150, CENTER, CENTER, false);
-    drawText("roboto", "Respond with #g1q_" + randomCode + " <number of questions>\r\nOne question takes roughly one minute.", 60, 1920 / 2, textY + 150, CENTER, CENTER, false);
+    drawText("roboto", "Respond with #g1q" + randomCode + " <number of questions>\r\nOne question takes roughly one minute.", 60, 1920 / 2, textY + 150, CENTER, CENTER, false);
 
     drawText("roboto", "You have " + timer / 1000 + " seconds to enter how many questons you\r\nwant to play. The responses will be averaged to generate a quiz!\r\nResponses greater than 30 will be ignored.", 30, 1920 / 2, textY + 350, CENTER, CENTER, false);
   }
@@ -555,15 +557,23 @@ public class stateQuestion extends State
     ShuffleArray(wrongAnswer);
     delayFrame = false;
     firstFrame = false;
-    
+
     String saying = "Question " + getNumberAsWord(qNo) + ": " + q.question;
-    
+
     switch (index[0])
     {
-    case 0: saying += ", is it A: " + q.correctAnswer + ", is it B: " + wrongAnswer[0] + ", is it C: " + wrongAnswer[1] + ", or is it D: " + wrongAnswer[2] + "? "; break;
-    case 1: saying += ", is it A: " + wrongAnswer[0] + ", is it B: " + q.correctAnswer + ", is it C: " + wrongAnswer[1] + ", or is it D: " + wrongAnswer[2] + "? "; break;
-    case 2: saying += ", is it A: " + wrongAnswer[0] + ", is it B: " + wrongAnswer[1] + ", is it C: " + q.correctAnswer + ", or is it D: " + wrongAnswer[2] + "? "; break;
-    case 3: saying += ", is it A: " + wrongAnswer[0] + ", is it B: " + wrongAnswer[1] + ", is it C: " + wrongAnswer[2] + ", or is it D: " + q.correctAnswer + "? "; break;
+    case 0: 
+      saying += ", is it A: " + q.correctAnswer + ", is it B: " + wrongAnswer[0] + ", is it C: " + wrongAnswer[1] + ", or is it D: " + wrongAnswer[2] + "? "; 
+      break;
+    case 1: 
+      saying += ", is it A: " + wrongAnswer[0] + ", is it B: " + q.correctAnswer + ", is it C: " + wrongAnswer[1] + ", or is it D: " + wrongAnswer[2] + "? "; 
+      break;
+    case 2: 
+      saying += ", is it A: " + wrongAnswer[0] + ", is it B: " + wrongAnswer[1] + ", is it C: " + q.correctAnswer + ", or is it D: " + wrongAnswer[2] + "? "; 
+      break;
+    case 3: 
+      saying += ", is it A: " + wrongAnswer[0] + ", is it B: " + wrongAnswer[1] + ", is it C: " + wrongAnswer[2] + ", or is it D: " + q.correctAnswer + "? "; 
+      break;
     }
     saying += "Use the hashtag g 1 q _ " + randomCode.replace("", " ").trim() + " to indicate your answer.";
     say(saying);
@@ -573,39 +583,49 @@ public class stateQuestion extends State
   {    
     if (delayFrame)
     {
+      int correctCount = 0;
+      int wrongCount = 0;
       say("The correct answer is " + q.correctAnswer);
       tickServo(5000);
       // now, check if the questions are right, and display them.
 
       if (!recentTweets.isEmpty())
       {
+        println(recentTweets);
         // check points
-        for (Entry<String, String> entry : recentTweets.entrySet())
+        for (Entry<String, String> entry : recentTweets.entrySet ())
         {
           String user = entry.getKey(); 
           String answer = entry.getValue();
 
-          if ((answer == "a" && correctAnswer == 0)
-            || (answer == "b" && correctAnswer == 1)
-            || (answer == "c" && correctAnswer == 2)
-            || (answer == "d" && correctAnswer == 3))
+          println(user + "'s answer: " + answer + ", correct answer index: " + correctAnswer);
+        
+          if ((answer.equals("a") && correctAnswer == 0)
+            || (answer.equals("b") && correctAnswer == 1)
+            || (answer.equals("c") && correctAnswer == 2)
+            || (answer.equals("d") && correctAnswer == 3))
           {
+            correctCount++;
             if (scores.containsKey(user))
               scores.put(user, scores.get(user) + 1);
             else
               scores.put(user, 1);
+          } else
+          {
+            wrongCount++;
+            // it's wrong. Need to store this.
           }
-        }
-        
+        }        
         println(scores);
-        
+        attempts.add(new Attempts(q.question, correctCount, wrongCount));
+
         if (!questions.isLastQuestion())
-        {
-          pushStack(new stateQuestion());
-        } else
         {
           // game's up!
           pushStack(new stateQuestion());
+        } else
+        {
+          pushStack(new stateComplete());
         }
       }
     }
@@ -661,7 +681,7 @@ public class stateQuestion extends State
       drawImage("label", 37, 707);
       drawImage("label", 967, 707);
 
-      drawText("roboto", "Respond with #g1q_" + randomCode + " <letter>", 60, 1920 / 2, 900, CENTER, CENTER, false);
+      drawText("roboto", "Respond with #g1q" + randomCode + " <letter>", 60, 1920 / 2, 900, CENTER, CENTER, false);
       drawText("roboto", "You have " + timer / 1000 + " seconds enter your answer!", 30, 1920 / 2, 1000, CENTER, CENTER, false);
     }
 
@@ -718,6 +738,70 @@ public class stateQuestion extends State
   }
 }
 
+
+public class stateComplete extends State
+{
+  Object[] arrayScores;
+  
+  void onSetup(PApplet window)
+  {
+    // game is now over. congratulate top three, and generate image.
+    // load the crowns.
+    images.put("crown-bronze", loadImage("crown_bronze.png"));
+    images.put("crown-silver", loadImage("crown_silver.png"));
+    images.put("crown-gold", loadImage("crown_gold.png"));
+    
+    // remove the placeholder.
+    scores.remove("ignore");
+    
+    // sort the scores.
+    Map<String, Integer> sortedScores = new TreeMap(Collections.reverseOrder());
+    sortedScores.putAll(scores);
+    
+    arrayScores = sortedScores.entrySet().toArray();
+    println(arrayScores);
+    
+    // cast to entry<s, i> here
+    
+  } 
+
+  void onUpdate()
+  {
+  } 
+
+
+  void onDraw()
+  {
+    if (arrayScores[0] != null)
+    {
+      drawImage("crown-gold", 100, 180);
+      Entry<String, Integer> ent = (Entry<String, Integer>)arrayScores[0];
+      drawText("roboto", ent.getKey() + " - " + ent.getValue(),60, 400,180, LEFT, CENTER, false); 
+    }
+    
+    if (arrayScores[1] != null)
+    {
+      drawImage("crown-silver", 100, 540);
+      Entry<String, Integer> ent = (Entry<String, Integer>)arrayScores[1];
+      drawText("roboto", ent.getKey() + " - " + ent.getValue(),60, 400, 540, LEFT, CENTER, false); 
+      
+    }
+    
+    if (arrayScores[2] != null)
+    {
+      drawImage("crown-bronze", 100, 900);
+      Entry<String, Integer> ent = (Entry<String, Integer>)arrayScores[2];
+      drawText("roboto", ent.getKey() + " - " + ent.getValue(),60, 400, 900, LEFT, CENTER, false); 
+      
+    }
+  }
+
+  void onEnd()
+  {
+    
+  }
+}
+
 void drawQuestion(String text, int index)
 {
   int x = 0, y = 0;
@@ -764,6 +848,7 @@ public class stateQuestionsToPlay extends State
   {    
 
     scores = new HashMap<String, Integer>();
+    attempts = new ArrayList<Attempts>();
     println("entered onSetup()");
     count = 0;
     total = 0;
@@ -885,28 +970,42 @@ class Question
   private String wrongAnswers;
 }
 
+class Attempts
+{
+   private String question;
+  private int correct;
+ private int wrong; 
+ 
+ public Attempts(String question, int correct, int wrong)
+ {
+  this.question = question;
+ this.correct = correct; 
+this.wrong = wrong; 
+ }
+}
+
 class TextThread extends Thread {
   String toSay;
- 
+
   TextThread(String say) {
     toSay = say;
   }
- 
+
   void start() {
     super.start();
   }
- 
+
   void run() {
   }
- 
+
   void trigger() {
     tts.speak(toSay);
   }
- 
+
   void setSay(String say) {
     toSay = say;
   }
- 
+
   String getSay() {
     return toSay;
   }
