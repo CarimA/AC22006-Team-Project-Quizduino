@@ -575,7 +575,7 @@ public class stateQuestion extends State
       saying += ", is it A: " + wrongAnswer[0] + ", is it B: " + wrongAnswer[1] + ", is it C: " + wrongAnswer[2] + ", or is it D: " + q.correctAnswer + "? "; 
       break;
     }
-    saying += "Use the hashtag g 1 q _ " + randomCode.replace("", " ").trim() + " to indicate your answer.";
+    saying += "Use the hashtag g 1 q " + randomCode.replace("", " ").trim() + " to indicate your answer.";
     say(saying);
   }
 
@@ -599,7 +599,7 @@ public class stateQuestion extends State
           String answer = entry.getValue();
 
           println(user + "'s answer: " + answer + ", correct answer index: " + correctAnswer);
-        
+
           if ((answer.equals("a") && correctAnswer == 0)
             || (answer.equals("b") && correctAnswer == 1)
             || (answer.equals("c") && correctAnswer == 2)
@@ -738,11 +738,75 @@ public class stateQuestion extends State
   }
 }
 
+void generateInformercial(Object[] scores)
+{ 
+  // first off, calculate the height
+  int bufHeight = 0;
+  int y = 0;
+  
+  bufHeight += 300; // logo
+  for (Attempts attempt : attempts)
+  {
+    if (attempt.question.contains("\n"))
+      bufHeight += 100;
+    else
+      bufHeight += 60;
+  }
+  
+  // now create the buffer
+  PGraphics info = createGraphics(400, bufHeight);
+  info.beginDraw();
+
+  info.background(0, 124, 181);
+
+  // now render the logo
+  info.image(images.get("logo-s"), 42, 16);
+  y += 300;
+
+  // now render the top three
+
+  // now render the question attempts
+  for (Attempts attempt : attempts)
+  {  
+    info.textFont(fonts.get("roboto"), 16);
+  info.textAlign(CENTER, TOP);
+    info.fill(255);
+    
+    // write the question
+    info.text(attempt.question, 200, y);
+    
+    if (attempt.question.contains("\n"))
+      bufHeight += 50;
+    else
+      bufHeight += 30;
+    
+    // draw the bars
+    float correctWidth = 380 * (attempt.correct / (attempt.correct + attempt.wrong));
+    float wrongWidth = 380 * (attempt.wrong / (attempt.correct + attempt.wrong));
+    info.noStroke();
+    info.fill(49, 182, 115);
+    info.rect(10, y, correctWidth, 30);
+    info.fill(179, 39, 65);
+    info.rect(390 - wrongWidth, y, wrongWidth, 30);
+    
+    // write the number to the left and right
+    fill(255);
+    info.textAlign(LEFT, CENTER);
+    info.text(attempt.correct, 20, y + 15);
+    info.textAlign(RIGHT, CENTER);
+    info.text(attempt.wrong, 380, y + 15);
+    
+    y+= 40;
+  }
+
+  info.endDraw();
+  info.save("info.png");
+}
 
 public class stateComplete extends State
 {
   Object[] arrayScores;
-  
+
   void onSetup(PApplet window)
   {
     // game is now over. congratulate top three, and generate image.
@@ -750,55 +814,59 @@ public class stateComplete extends State
     images.put("crown-bronze", loadImage("crown_bronze.png"));
     images.put("crown-silver", loadImage("crown_silver.png"));
     images.put("crown-gold", loadImage("crown_gold.png"));
-    
+
     // remove the placeholder.
     scores.remove("ignore");
-    
+
     // sort the scores.
     Map<String, Integer> sortedScores = new TreeMap(Collections.reverseOrder());
     sortedScores.putAll(scores);
-    
+
     arrayScores = sortedScores.entrySet().toArray();
     println(arrayScores);
-    
-    // cast to entry<s, i> here
-    
+
+    // tell them that it's over
+    say("The quiz is now over. An overview on how well questions were attempted has been uploaded to at Quizduino on Twitter");
+    generateInformercial(arrayScores);
   } 
 
   void onUpdate()
   {
   } 
 
-
   void onDraw()
   {
-    if (arrayScores[0] != null)
+    for (int i = 0; i < 3; i++)
     {
-      drawImage("crown-gold", 100, 180);
-      Entry<String, Integer> ent = (Entry<String, Integer>)arrayScores[0];
-      drawText("roboto", ent.getKey() + " - " + ent.getValue(),60, 400,180, LEFT, CENTER, false); 
-    }
-    
-    if (arrayScores[1] != null)
-    {
-      drawImage("crown-silver", 100, 540);
-      Entry<String, Integer> ent = (Entry<String, Integer>)arrayScores[1];
-      drawText("roboto", ent.getKey() + " - " + ent.getValue(),60, 400, 540, LEFT, CENTER, false); 
-      
-    }
-    
-    if (arrayScores[2] != null)
-    {
-      drawImage("crown-bronze", 100, 900);
-      Entry<String, Integer> ent = (Entry<String, Integer>)arrayScores[2];
-      drawText("roboto", ent.getKey() + " - " + ent.getValue(),60, 400, 900, LEFT, CENTER, false); 
-      
+      if ((i >= 0) && (i < arrayScores.length)) 
+      {
+        if (!arrayScores[i].equals(null))
+        {
+          Entry<String, Integer> ent = (Entry<String, Integer>)arrayScores[i];
+          switch (i)
+          {
+          case 0:
+            drawImage("crown-gold", 100, 180);
+            drawText("roboto", ent.getKey() + " - " + ent.getValue(), 60, 400, 180, LEFT, CENTER, false);
+            break;
+
+          case 1:
+            drawImage("crown-silver", 100, 540);
+            drawText("roboto", ent.getKey() + " - " + ent.getValue(), 60, 400, 540, LEFT, CENTER, false);
+            break;
+
+          case 2:
+            drawImage("crown-bronze", 100, 900);
+            drawText("roboto", ent.getKey() + " - " + ent.getValue(), 60, 400, 900, LEFT, CENTER, false);
+            break;
+          }
+        }
+      }
     }
   }
 
   void onEnd()
   {
-    
   }
 }
 
@@ -954,7 +1022,7 @@ class QuestionManager
 
   public boolean isLastQuestion()
   {
-    return game.size() == 1;
+    return game.size() == 0;
   }
 }
 
@@ -972,16 +1040,16 @@ class Question
 
 class Attempts
 {
-   private String question;
+  private String question;
   private int correct;
- private int wrong; 
- 
- public Attempts(String question, int correct, int wrong)
- {
-  this.question = question;
- this.correct = correct; 
-this.wrong = wrong; 
- }
+  private int wrong; 
+
+  public Attempts(String question, int correct, int wrong)
+  {
+    this.question = question;
+    this.correct = correct; 
+    this.wrong = wrong;
+  }
 }
 
 class TextThread extends Thread {

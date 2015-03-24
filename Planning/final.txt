@@ -1,4 +1,2 @@
 ToDo:
- - Collect points
- - Store how well questions are attempted
  - Generate an (informercial styled) image based on how the questions were answered and the leaderboard

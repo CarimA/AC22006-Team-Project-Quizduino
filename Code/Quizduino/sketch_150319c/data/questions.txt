@@ -13,7 +13,7 @@
 	  {
 		"question": "What sport doesn’t have a goalie position?",
 		"correctAnswer": "Basketball",
-		"wrongAnswers": "Ice Hockey\r\nSoccer\r\nLacrosse"
+		"wrongAnswers": "Ice Hockey\r\nFootballr\r\nLacrosse"
 	  },
 	  {
 		"question": "What is the center of an atom called?",
