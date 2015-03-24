@@ -41,7 +41,7 @@ void setup()
 {
   size(1920, 1080);
 
-  ard = new Arduino(this, Arduino.list()[2], 57600);
+  ard = new Arduino(this, Arduino.list()[0], 57600);
   ard.pinMode(servoPin, 4);
   ard.pinMode(buzzerPin, Arduino.OUTPUT);
 
@@ -743,7 +743,7 @@ void generateInformercial(Object[] scores)
   // first off, calculate the height
   int bufHeight = 0;
   int y = 0;
-  
+
   bufHeight += 300; // logo
   for (Attempts attempt : attempts)
   {
@@ -752,7 +752,7 @@ void generateInformercial(Object[] scores)
     else
       bufHeight += 60;
   }
-  
+
   // now create the buffer
   PGraphics info = createGraphics(400, bufHeight);
   info.beginDraw();
@@ -769,17 +769,17 @@ void generateInformercial(Object[] scores)
   for (Attempts attempt : attempts)
   {  
     info.textFont(fonts.get("roboto"), 16);
-  info.textAlign(CENTER, TOP);
+    info.textAlign(CENTER, TOP);
     info.fill(255);
-    
+
     // write the question
     info.text(attempt.question, 200, y);
-    
+
     if (attempt.question.contains("\n"))
       bufHeight += 50;
     else
       bufHeight += 30;
-    
+
     // draw the bars
     float correctWidth = 380 * (attempt.correct / (attempt.correct + attempt.wrong));
     float wrongWidth = 380 * (attempt.wrong / (attempt.correct + attempt.wrong));
@@ -788,19 +788,30 @@ void generateInformercial(Object[] scores)
     info.rect(10, y, correctWidth, 30);
     info.fill(179, 39, 65);
     info.rect(390 - wrongWidth, y, wrongWidth, 30);
-    
+
     // write the number to the left and right
     fill(255);
     info.textAlign(LEFT, CENTER);
     info.text(attempt.correct, 20, y + 15);
     info.textAlign(RIGHT, CENTER);
     info.text(attempt.wrong, 380, y + 15);
-    
+
     y+= 40;
   }
 
   info.endDraw();
   info.save("info.png");
+
+  /*try
+  {
+    Status status = twitter.updateStatus("Quiz finished, thank you for playing!");
+    status.setMedia(new java.io.File("info.png"));
+    twitter.updateStatus(status);
+  }
+  catch (TwitterException e)
+  {
+    println(e);
+  }*/
 }
 
 public class stateComplete extends State
